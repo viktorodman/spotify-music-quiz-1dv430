@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import socketIOClient from 'socket.io-client'
 
+import Login from './components/Login/Login'
 
 class App extends Component {
   constructor (props) {
@@ -21,6 +22,10 @@ class App extends Component {
     this.setState({ color })
   }
 
+  loginHandler = () => {
+    console.log('TEST')
+  }
+
   componentDidMount = () => {
     const socket = socketIOClient(this.state.endpoint)
     setInterval(this.send(), 1000)
@@ -35,13 +40,7 @@ class App extends Component {
 
     return (
       <div style={{ textAlign: "center" }}>
-        <button onClick={() => this.send() }>Change Color</button>
-
-
-
-        <button id="blue" onClick={() => this.setColor('blue')}>Blue</button>
-        <button id="red" onClick={() => this.setColor('red')}>Red</button>
-
+        <Login clicked={this.loginHandler}/>
       </div>
     )
   }
