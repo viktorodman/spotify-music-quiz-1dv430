@@ -7,11 +7,11 @@ const express = require('express')
 const app = express()
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
-
 const session = require('express-session')
-
+ 
 
 app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
 
 const sessionOptions = {
     name: 'spooootify',

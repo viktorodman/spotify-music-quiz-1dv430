@@ -10,4 +10,5 @@ loginController.index = async (req, res) => {
         '&redirect_uri=' + encodeURIComponent(process.env.SPOTIFY_REDIRECT_URI))
 }
 
+
 module.exports = loginController
