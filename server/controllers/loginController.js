@@ -11,4 +11,13 @@ loginController.index = async (req, res) => {
 }
 
 
+loginController.isLoggedIn = (req, res) => {
+    let status = true
+    if (!req.session.user) {
+        status = false
+    }
+    res.json({ loggedIn: status })
+}
+
+
 module.exports = loginController

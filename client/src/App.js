@@ -9,14 +9,22 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-     songs: []
+     isLoggedIn: false
     }
   }
 
+  checkLoggedIn = async () => {
+    let isLoggedIn = await fetch('/login/isLoggedIn')
+    isLoggedIn = await isLoggedIn.json()
+    console.log(await isLoggedIn)
+    this.setState({isLoggedIn: isLoggedIn.loggedIn})
+  }
+
   componentDidMount = () => {
-    fetch('/songs')
+    /* fetch('/login/isLoggedIn')
       .then(res => res.json())
-      .then(songs => console.log(songs))
+      .then(isLoggedIn => this.setState({isLoggedIn})) */
+      this.checkLoggedIn()
   }
 
   render () {
@@ -25,7 +33,7 @@ class App extends Component {
 
     return (
       <div style={{ textAlign: "center" }}>
-        <p>xD</p>
+        {this.state.isLoggedIn ? <p>Logged In</p> : <p>Not Logged in</p>}
         <a href="http://localhost:5000/login">login</a>
       </div>
     )
