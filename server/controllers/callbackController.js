@@ -6,8 +6,6 @@ const fetch = require('node-fetch')
 const { URLSearchParams } = require('url')
 
 callbackController.index = async (req, res) => {
-    /* console.log(req.query.code) */
-    /* console.log(req) */
     const params = new URLSearchParams()
     params.append('grant_type', 'authorization_code')
     params.append('code', req.query.code)

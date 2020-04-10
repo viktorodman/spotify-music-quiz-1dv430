@@ -9,6 +9,16 @@ const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 const session = require('express-session')
  
+const mongoose = require('./configs/mongoose')
+
+
+// CONNECTING TO DATABASE
+// ========================
+  mongoose.connect().catch(error => {
+    console.error(error)
+    process.exit(1)
+  })
+// ========================
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
