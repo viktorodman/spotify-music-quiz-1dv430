@@ -5,8 +5,7 @@ class Login extends Component {
         return (
             <div>
                 <p>Login Here</p>
-                <button onClick={this.props.clicked}>
-                Login with Spotify</button>
+                <a href={this.props.loginLink}>Login With Spotify</a>
             </div>
         )
     }

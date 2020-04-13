@@ -19,5 +19,10 @@ loginController.isLoggedIn = (req, res) => {
     res.json({ loggedIn: status })
 }
 
+loginController.logout = (req, res) => {
+    req.session.destroy()
+    res.json('User is now logged out')
+}
+
 
 module.exports = loginController
