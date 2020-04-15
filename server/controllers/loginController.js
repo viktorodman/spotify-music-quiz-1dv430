@@ -20,8 +20,16 @@ loginController.isLoggedIn = (req, res) => {
 }
 
 loginController.logout = (req, res) => {
-    req.session.destroy()
-    res.json('User is now logged out')
+    try {
+        if (!req.session.user) {
+            throw new Error('You cant logout when not logged in')
+        }
+        req.session.destroy()
+        res.json('User is now logged out')
+    } catch (error) {
+        res.json(error.message)
+    }
+    
 }
 
 
