@@ -15,7 +15,7 @@ callbackController.index = async (req, res) => {
     if (user) {
         await updateUser(id, access_token, refresh_token)
     } else {
-        user = new User({
+        user = await new User({
             display_name,
             id,
             images,
@@ -25,18 +25,11 @@ callbackController.index = async (req, res) => {
         })
         await user.save()
     }
-
-    
-
-    
-    
-
     
     req.session.user = user.id
+   
     res.redirect('http://localhost:3000')
 }
-
-// display_name, id, images, product, access_token, refresh_token
 
 const fetchUserCredentials = async (code) => {
     const params = new URLSearchParams()
@@ -54,6 +47,7 @@ const fetchUserCredentials = async (code) => {
             ).toString('base64'))
         }
     })
+
 
     return response.json()
 }
@@ -73,6 +67,11 @@ const updateUser = async (id, access_token, refresh_token)  => {
         access_token,
         refresh_token
     })
+    if (updatedUser.nModified === 1) {
+        console.log('UPDATE SUCCESSFULL')
+      } else {
+        console.log('UPDATE FAILED')
+        }
 }
 
 module.exports = callbackController

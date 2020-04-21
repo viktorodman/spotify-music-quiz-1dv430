@@ -1,8 +1,9 @@
 'use strict'
 
-const loginController = {}
+const authController = {}
+const User = require('../models/User')
 
-loginController.index = async (req, res) => {
+authController.login = async (req, res) => {
     res.redirect('https://accounts.spotify.com/authorize' + 
         '?response_type=code' + 
         '&client_id=' + process.env.SPOTIFY_CLIENT_ID +
@@ -11,15 +12,16 @@ loginController.index = async (req, res) => {
 }
 
 
-loginController.isLoggedIn = (req, res) => {
+authController.isLoggedIn = async (req, res) => {
     let status = true
     if (!req.session.user) {
         status = false
     }
-    res.json({ loggedIn: status })
+    console.log(req.session.user)
+    return res.json({ data: status })
 }
 
-loginController.logout = (req, res) => {
+authController.logout = (req, res) => {
     try {
         if (!req.session.user) {
             throw new Error('You cant logout when not logged in')
@@ -32,5 +34,17 @@ loginController.logout = (req, res) => {
     
 }
 
+authController.getToken = async (req, res) => {
+    try {
+        const { access_token } = await User.findOne({ id: req.session.user })
+        if(!access_token) {
+            throw new Error('No acces token found')
+        }
+        res.json({data: access_token})
+    } catch (error) {
+        console.log(error)
+    }
+}
 
-module.exports = loginController
+
+module.exports = authController
