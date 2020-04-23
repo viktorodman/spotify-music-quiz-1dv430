@@ -5,7 +5,8 @@ const router = express.Router()
 
 const controller = require('../controllers/playerController')
 
-router.get('/play', controller.play)
+router.post('/play', controller.play)
+router.post('/pause', controller.pause)
 
 
 module.exports = router

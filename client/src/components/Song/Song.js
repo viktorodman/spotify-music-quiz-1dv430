@@ -17,7 +17,7 @@ class Song extends Component {
                <div>
                    <p>Artist: {this.props.songInfo.artists[0]}</p>
                    <p>Song Title{this.props.songInfo.title}</p>
-                   <img src={this.props.songInfo.albumCover[2].url} alt="Album Cover"/>
+                   <img src={this.props.songInfo.albumCover[1].url} alt="Album Cover"/>
                </div>: null
            }
             </div>

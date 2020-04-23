@@ -57,10 +57,11 @@ app.use(cors(corsOptions));
 app.get('/', (req, res) => res.send('TEEEEEST'))
 
 const socketRoutes = require('./socketRoutes/socketRouter')
-app.use('api/player', require('./routes/playerRouter'))
+app.use('/api/player', require('./routes/playerRouter'))
 app.use('/api/songs', require('./routes/songsRouter'))
 app.use('/api/auth', require('./routes/authRouter'))
 app.use('/api/callback', require('./routes/callbackRouter'))
+app.use('/api/quiz', require('./routes/quizRouter'))
 
 // ======================================================//
 

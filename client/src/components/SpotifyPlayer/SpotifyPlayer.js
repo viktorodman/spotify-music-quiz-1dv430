@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { setDevice } from '../../actions/playerActions'
+import { setDevice, playSong } from '../../actions/playerActions'
 import { getToken } from '../../actions/authActions' 
 import { connect } from 'react-redux'
 
@@ -40,10 +40,6 @@ waitForSpotify = async () => {
     this.player.addListener('ready', ({ device_id }) => {
       console.log('Ready with Device ID', device_id)
       this.props.setDevice(device_id)
-      /* play({
-        playerInstance: player,
-        spotify_uri: spotifyURI
-      }) */
   })
 
     // Not Ready
@@ -53,24 +49,6 @@ waitForSpotify = async () => {
 
     // Connect to the player!
     this.player.connect();
-
-    /* const play = ({
-      spotify_uri,
-      playerInstance,
-    }) => {
-      playerInstance._options.getOAuthToken(access_totken => {
-        fetch(`https://api.spotify.com/v1/me/player/play?device_id=${playerInstance._options.id}`, {
-          method: 'PUT',
-          body: JSON.stringify({ uris: [spotify_uri] }),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-        })
-      })
-    } */
-  
-   
   }
 
 
@@ -84,8 +62,9 @@ waitForSpotify = async () => {
               {
               this.props.playerReady ?
               <div>
-                <button onClick={() => console.log('START SONG')}>Start</button>
-                <button onClick={() => console.log('STOP SONG')}>Stop</button>
+                <button onClick={() => this.props.playSong(this.props.deviceId)}>Start</button>
+                <button onClick={() => this.player.resume()}>Resume</button>
+                <button onClick={() => this.player.pause()}>Stop</button>
               </div>
               : <p>Loading</p>
             }
@@ -95,9 +74,10 @@ waitForSpotify = async () => {
 }
 
 const mapStateToProps = (state) => ({
-  playerReady: state.player.playerReady
+  playerReady: state.player.playerReady,
+  deviceId: state.player.deviceId
 })
 
 
 
-export default connect(mapStateToProps, { setDevice, getToken })(SpotifyPlayer)
+export default connect(mapStateToProps, { setDevice, getToken, playSong })(SpotifyPlayer)
