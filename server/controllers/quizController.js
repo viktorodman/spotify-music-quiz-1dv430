@@ -3,6 +3,8 @@
 const quizController = {}
 
 const User = require('../models/User')
+/* const Question = require('../models/Question')
+const Alternative = require('../models/Alternative') */
 const fetch = require('node-fetch')
 
 quizController.createQuiz = async (req, res) => {
@@ -10,7 +12,7 @@ quizController.createQuiz = async (req, res) => {
     const { access_token, id } = await User.findOne({ id: req.session.user })
     const questions = await getQuestions(access_token, id)
     
-    /* const test = await createQuestions(tracks) */
+    /* const test = await getArtistImage(url, access_token) */
 
     res.json(questions)
 }
@@ -19,9 +21,12 @@ const getQuestions = async (access_token, id) => {
     const playlists = await getPlaylists(access_token, id)
     const tracks = await getTracks(access_token, playlists)
     const filteredTracks = await filterTracks(tracks)
-    const questions = await createQuestions(filteredTracks)
+    const questions = await createQuestions(filteredTracks, access_token)
+    const clientData = await saveQuestions(questions, id)
 
-    return questions
+
+
+    return clientData
 }
 
 const getPlaylists = async (access_token, user_id) => {
@@ -42,6 +47,19 @@ const getPlaylists = async (access_token, user_id) => {
 
     return playlists
 }
+
+const saveQuestions = async (questions, id) => {
+    const user = await User.updateOne({id}, {
+        user_questions: questions
+    })
+
+    for (let i = 0; i < questions.length; i++) {
+        delete questions[i].question_correct_alt
+    }
+    
+    return questions
+}
+
 
 const filterTracks = async (tracks) => {
     return tracks.filter(track => track.track.album.release_date)
@@ -79,49 +97,107 @@ const getTracks = async (access_token, playlists) => {
  */
 
 
-const createQuestions = async (tracks) => {
+const createQuestions = async (tracks, access_token) => {
     const randomTracks = shuffleTracks(tracks).slice(0,32)
     const questions = []
-    let tempTrack = []
-    let test = {
-        question: {}
-    }
+    let tempArray = []
+    
+    let correctAltNumber = null
+    let correctAltTrack = null
+    let correctAltImg = null
+
     let random = getRandomNumber(1, 4)
-    let x = 1
+    let altNumber = 1
+    let questionNumber = 1
+
+    let questionTypeIsWho = true
    
     for (let i = 0; i < randomTracks.length; i++) {
-        const y = 'alt' + x
-        test.question[y] = {
-            album: getAlbumItems(randomTracks[i].track.album),
-            track: getTrackItems(randomTracks[i].track),
-            artist_name: randomTracks[i].track.artists[0].name,
-            correct_answer: (random === x)
+
+        if (questionTypeIsWho) {
+            tempArray.push(await createWhoAlternative(altNumber, randomTracks[i], access_token))
+        } else {
+            tempArray.push(createWhatAlternative(altNumber, randomTracks[i]))
         }
 
-        
+        if (random === altNumber) {
+            correctAltNumber = altNumber
+            correctAltImg = (questionTypeIsWho) ? randomTracks[i].track.album.images[0].url : await getArtistImage(randomTracks[i].track.artists[0].href, access_token)
+            correctAltTrack = randomTracks[i].track.uri
+        }
 
-        
-
-        if (x % 4 === 0) {
-            questions.push(test)
-            test = {question: {}}
+        if (altNumber % 4 === 0) {
+            
+            questions.push((questionTypeIsWho) ? await createWhoQuestion(tempArray, correctAltNumber, correctAltTrack, correctAltImg, questionNumber)
+                                               : await createWhatQuestion(tempArray, correctAltNumber, correctAltTrack, correctAltImg, questionNumber))   
+            tempArray = []
             random = getRandomNumber(1, 4)
-            x = 0
+            altNumber = 0
+            questionTypeIsWho = !questionTypeIsWho
+            questionNumber++
         }
-        x++
+        altNumber++
     }
-
-    
-  
 
     return questions
 }
 
-/* const createQuestion = (y) => {
-    const question = q ={
-        'test': 'test'
+const createWhoQuestion = (tempArray, correctAltNumber, correctAltTrack, correctAltImg, questionNumber) => {
+    return {
+        question_img: correctAltImg,
+        question_number: questionNumber,
+        question_title: 'Whats the song title',
+        question_track_url: correctAltTrack,
+        question_correct_alt: correctAltNumber,
+        question_alternatives: tempArray
     }
-} */
+}
+
+const createWhoAlternative  = async (alt_number, trackObject, access_token) => {
+    const img = await getArtistImage(trackObject.track.artists[0].href, access_token)
+    return {
+        alt_number,
+        alt_img: img,
+        alt_title: trackObject.track.artists[0].name
+    }
+}
+
+const createWhatQuestion = (tempArray, correctAltNumber, correctAltTrack, correctAltImg, questionNumber) => {
+    return {
+        question_img: correctAltImg,
+        question_number: questionNumber,
+        question_title: 'Who is the artist',
+        question_song_url: correctAltTrack,
+        question_correct_alt: correctAltNumber,
+        question_alternatives: tempArray
+    }
+}
+
+const createWhatAlternative = (alt_number, trackObject) => {
+    return {
+        alt_number,
+        alt_img: trackObject.track.album.images[0].url,
+        alt_title: trackObject.track.name
+    }
+}
+
+const getArtistImage = async (url, access_token) => {
+    const response  = await fetch(url, {
+        headers: {
+            'Authorization' : `Bearer ${access_token}`
+        }
+    })
+
+
+
+    const { images } = await response.json()
+
+    if(await !images[0].url) {
+        return 'https://via.placeholder.com/350x150'
+    }
+
+    return images[0].url
+}
 
 
 const shuffleTracks = (tracks) => {
