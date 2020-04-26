@@ -18,7 +18,7 @@ callbackController.index = async (req, res) => {
         user = await new User({
             display_name,
             id,
-            images,
+            images: (images[0]) ? images : ['https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'],
             product,
             access_token,
             refresh_token
@@ -53,11 +53,12 @@ const fetchUserCredentials = async (code) => {
 }
 
 const getUserInfo = async (accessToken) => {
-     const response = await fetch('https://api.spotify.com/v1/me', {
+     let response = await fetch('https://api.spotify.com/v1/me', {
         headers: {
             'Authorization': `Bearer ${accessToken}`
         }
     })
+    
     
     return response.json()
 }
@@ -65,7 +66,7 @@ const getUserInfo = async (accessToken) => {
 const updateUser = async (id, access_token, refresh_token)  => {
     const updatedUser = await User.updateOne({ id }, {
         access_token,
-        refresh_token
+        refresh_token 
     })
     if (updatedUser.nModified === 1) {
         console.log('UPDATE SUCCESSFULL')

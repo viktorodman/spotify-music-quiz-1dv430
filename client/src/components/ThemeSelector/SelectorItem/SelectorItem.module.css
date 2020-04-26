@@ -1,0 +1,37 @@
+
+
+.SelectorItem {
+
+}
+.SelectorItem img {
+    max-width: 300px;
+}
+
+.SelectorItem img:hover {
+    opacity:0.6;
+    cursor: pointer;
+}
+
+.SelectorItem input[type=radio] {
+    display: none;
+  }
+
+.SelectorItem img:active {
+    opacity:0.4;
+    cursor: pointer;
+}
+
+label {
+    height: 100%;
+    display: block;
+    background: white;
+}
+
+input[type=radio]:checked + label{
+    /* color: lighten(#332f35,60%); */
+    opacity:0.4;
+}
+  
+.SelectorItem input[type=radio]:checked + label > img {
+    border: 20px solid rgb(228, 207, 94);
+}

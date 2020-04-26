@@ -17,6 +17,25 @@ quizController.createQuiz = async (req, res) => {
     res.json(questions)
 }
 
+quizController.getQuizzes = async (req, res) => {
+    const { access_token, images } = await User.findOne({ id: req.session.user })
+
+    const response  = await fetch("https://api.spotify.com/v1/browse/categories/decades/playlists", {
+        headers: {
+            'Authorization' : `Bearer ${access_token}`
+        }
+    })
+
+    const data = await response.json()
+
+    const listImages = await data.playlists.items.map(d => d.images[0].url).slice(0,2)
+
+    listImages.unshift(images[0])
+    
+    res.json(listImages)
+
+}
+
 const getQuestions = async (access_token, id) => {
     const playlists = await getPlaylists(access_token, id)
     const tracks = await getTracks(access_token, playlists)
@@ -146,7 +165,7 @@ const createWhoQuestion = (tempArray, correctAltNumber, correctAltTrack, correct
     return {
         question_img: correctAltImg,
         question_number: questionNumber,
-        question_title: 'Whats the song title',
+        question_title: 'Who is the artist',
         question_track_url: correctAltTrack,
         question_correct_alt: correctAltNumber,
         question_alternatives: tempArray
@@ -166,7 +185,7 @@ const createWhatQuestion = (tempArray, correctAltNumber, correctAltTrack, correc
     return {
         question_img: correctAltImg,
         question_number: questionNumber,
-        question_title: 'Who is the artist',
+        question_title: 'Whats the song title',
         question_song_url: correctAltTrack,
         question_correct_alt: correctAltNumber,
         question_alternatives: tempArray
@@ -192,11 +211,9 @@ const getArtistImage = async (url, access_token) => {
 
     const { images } = await response.json()
 
-    if(await !images[0].url) {
-        return 'https://via.placeholder.com/350x150'
-    }
+    
 
-    return images[0].url
+    return (typeof images[0] === 'undefined') ? 'https://via.placeholder.com/350x150': images[0].url
 }
 
 
