@@ -7,48 +7,69 @@ const User = require('../models/User')
 const Alternative = require('../models/Alternative') */
 const fetch = require('node-fetch')
 
+// DEAFAULT Quizess
+const quizess = [
+    {
+        id: '37i9dQZF1DWTJ7xPn4vNaz',
+        image: 'https://i.scdn.co/image/ab67706f00000002f0c5c7ed627d220ee59581ca',
+        description: '70s'
+    },
+    {
+        id: '37i9dQZF1DX4UtSsGT1Sbe',
+        image: 'https://i.scdn.co/image/ab67706f000000023e0b7acc87d7f155120dc026',
+        description: '80s'
+    },
+    {
+        id: '37i9dQZF1DXbTxeAdrVG2l',
+        image: 'https://i.scdn.co/image/ab67706f00000002150ff1f5d84660a4d013c9fa',
+        description: '90s'
+    }
+]
+//
+
 quizController.createQuiz = async (req, res) => {
 
     const { access_token, id } = await User.findOne({ id: req.session.user })
-    const questions = await getQuestions(access_token, id)
+
+    const { playlist_id } = req.body
+
+    let tracks = null
+
+
+
+    if (playlist_id === id) {
+        tracks = await getUserTracks(access_token, id)
+    } else {
+        tracks = await getTracksFromPlaylist(access_token, playlist_id)
+    }
     
-    /* const test = await getArtistImage(url, access_token) */
-
-    res.json(questions)
-}
-
-quizController.getQuizzes = async (req, res) => {
-    const { access_token, images } = await User.findOne({ id: req.session.user })
-
-    const response  = await fetch("https://api.spotify.com/v1/browse/categories/decades/playlists", {
-        headers: {
-            'Authorization' : `Bearer ${access_token}`
-        }
-    })
-
-    const data = await response.json()
-
-    const listImages = await data.playlists.items.map(d => d.images[0].url).slice(0,2)
-
-    listImages.unshift(images[0])
-    
-    res.json(listImages)
-
-}
-
-const getQuestions = async (access_token, id) => {
-    const playlists = await getPlaylists(access_token, id)
-    const tracks = await getTracks(access_token, playlists)
-    const filteredTracks = await filterTracks(tracks)
+    const filteredTracks = await filterTracks(tracks.flat())
     const questions = await createQuestions(filteredTracks, access_token)
     const clientData = await saveQuestions(questions, id)
 
-
-
-    return clientData
+    res.json(clientData)
 }
 
-const getPlaylists = async (access_token, user_id) => {
+quizController.getQuizzes = async (req, res) => {
+    const { access_token, images, id } = await User.findOne({ id: req.session.user })
+
+    const image = images[0]
+
+    const data = [{ id, image, description: 'Based on your playlists' } , ...quizess]
+    
+    res.json(data)
+}
+
+
+
+const getUserTracks = async (access_token, id) => {
+    const playlists = await getUserPlaylists(access_token, id)
+    const tracks = await Promise.all(playlists.map(async (playlist) => await getTracksFromPlaylist(access_token, playlist.id)))
+    
+    return tracks
+}
+
+const getUserPlaylists = async (access_token, user_id) => {
     const response  = await fetch(`https://api.spotify.com/v1/users/${user_id}/playlists?limit=10`, {
         headers: {
             'Authorization' : `Bearer ${access_token}`
@@ -67,6 +88,29 @@ const getPlaylists = async (access_token, user_id) => {
     return playlists
 }
 
+const getTracksFromPlaylist = async (access_token, playlist_id) => {
+    /* const tracks = []
+    for (let index = 0; index < playlists.length; index++) { */
+    let response = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
+        headers: {
+            'Authorization' : `Bearer ${access_token}`
+        }
+    })
+
+    const data = await response.json()
+
+   
+
+    const tracks = await data.items.map(track => track.track)
+
+       /*  tracks.push(...items)
+    } */
+
+
+
+    return tracks
+}
+
 const saveQuestions = async (questions, id) => {
     const user = await User.updateOne({id}, {
         user_questions: questions
@@ -81,39 +125,8 @@ const saveQuestions = async (questions, id) => {
 
 
 const filterTracks = async (tracks) => {
-    return tracks.filter(track => track.track.album.release_date)
+    return tracks.filter(track => track.album.release_date)
 }
-
-const getTracks = async (access_token, playlists) => {
-    const tracks = []
-    for (let index = 0; index < playlists.length; index++) {
-        let response = await fetch(`https://api.spotify.com/v1/playlists/${playlists[index].id}/tracks`, {
-            headers: {
-                'Authorization' : `Bearer ${access_token}`
-            }
-        })
-
-        const { items } = await response.json()
-
-        tracks.push(...items)
-    }
-
-
-
-    return tracks
-}
-
-/* const { items } = await response.json()
-
-        for (const item of await items) {
-            if (item.track.album.release_date)
-            tracks.push({
-                album: getAlbumItems(item.track.album),
-                track: getTrackItems(item.track),
-                artist_name: item.track.artists[0].name
-            })
-        }
- */
 
 
 const createQuestions = async (tracks, access_token) => {
@@ -141,8 +154,8 @@ const createQuestions = async (tracks, access_token) => {
 
         if (random === altNumber) {
             correctAltNumber = altNumber
-            correctAltImg = (questionTypeIsWho) ? randomTracks[i].track.album.images[0].url : await getArtistImage(randomTracks[i].track.artists[0].href, access_token)
-            correctAltTrack = randomTracks[i].track.uri
+            correctAltImg = (questionTypeIsWho) ? randomTracks[i].album.images[0].url : await getArtistImage(randomTracks[i].artists[0].href, access_token)
+            correctAltTrack = randomTracks[i].uri
         }
 
         if (altNumber % 4 === 0) {
@@ -173,11 +186,11 @@ const createWhoQuestion = (tempArray, correctAltNumber, correctAltTrack, correct
 }
 
 const createWhoAlternative  = async (alt_number, trackObject, access_token) => {
-    const img = await getArtistImage(trackObject.track.artists[0].href, access_token)
+    const img = await getArtistImage(trackObject.artists[0].href, access_token)
     return {
         alt_number,
         alt_img: img,
-        alt_title: trackObject.track.artists[0].name
+        alt_title: trackObject.artists[0].name
     }
 }
 
@@ -195,8 +208,8 @@ const createWhatQuestion = (tempArray, correctAltNumber, correctAltTrack, correc
 const createWhatAlternative = (alt_number, trackObject) => {
     return {
         alt_number,
-        alt_img: trackObject.track.album.images[0].url,
-        alt_title: trackObject.track.name
+        alt_img: trackObject.album.images[0].url,
+        alt_title: trackObject.name
     }
 }
 
@@ -234,20 +247,6 @@ const shuffleTracks = (tracks) => {
     return tracksCopy
 }
 
-const getTrackItems = (track) => {
-    return {
-        track_name: track.name,
-        uri: track.uri
-    }
-}
-
-const getAlbumItems = (album) => {
-    return {
-        album_name: album.name,
-        album_release_year: (album.release_date_precision === 'day' ? album.release_date.slice(0, 4): album.release_date),
-        images: album.images.filter(image => image.height > 200)
-    }
-}
 
 const getRandomNumber = (min, max) => {
     min = Math.ceil(min)

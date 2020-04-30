@@ -14,10 +14,15 @@ class ThemeSelector extends Component {
         }
         return (
             <div className="ui four column centered grid">
-
-                <SelectorItem itemNumber="choice-1" quizImages={this.props.quizzes[0]}/>
-                <SelectorItem itemNumber="choice-2" quizImages={this.props.quizzes[1]}/>
-                <SelectorItem itemNumber="choice-3" quizImages={this.props.quizzes[2]}/>
+                {this.props.quizzes.map(quiz => 
+                (<SelectorItem 
+                quizId={quiz.id} 
+                quizImage={quiz.image}
+                quizDescription={quiz.description}
+                key={quiz.id}
+                click={(id) => this.props.selectQuiz(id)}
+                />
+                ))}
             </div>
         )
     }
@@ -30,4 +35,4 @@ const mapStateToProps = (state) => ({
 
 
 
-export default connect(mapStateToProps, { selectQuiz, getPossibleQuizzes })(ThemeSelector)
+export default connect(mapStateToProps, { selectQuiz, getPossibleQuizzes})(ThemeSelector)

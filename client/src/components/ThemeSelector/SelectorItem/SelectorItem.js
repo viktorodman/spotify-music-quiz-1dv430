@@ -5,20 +5,23 @@ const SelectorItem = (props) => {
     return (
         <div className={classes.SelectorItem}>
             <div className="column">
-            <input type="radio" name="quiz" id={props.itemNumber}/>
-            <label htmlFor={props.itemNumber}>
+            <input type="radio" name="quiz" id={props.quizId} onClick={() => props.click(props.quizId)}/>
+            
+            <label htmlFor={props.quizId}>
             <div className="ui fluid card">
                 <div className="image">
-                    <img src={props.quizImages} />
+                    <img src={props.quizImage} />
                 </div>
                 <div className="content">
-                    <a className="header">Daniel Louise</a>
+                    <span>{props.quizDescription}</span>
                 </div>
             </div>
             </label>
             </div>
+            <input type="hidden" name={props.quizId}/>
         </div>
     )
 }
+
 
 export default SelectorItem
