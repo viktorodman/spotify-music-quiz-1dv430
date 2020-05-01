@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 
 import { getQuestions } from '../../actions/quizActions'
 
+import QuizQuestion from './QuizQuestion/QuizQuestion'
+import QuizAlts from './QuizAlts/QuizAlts'
+
 export class Quiz extends Component {
     componentDidMount() {
         this.props.getQuestions(this.props.selectedQuiz)
@@ -10,19 +13,25 @@ export class Quiz extends Component {
 
     render() {
         if(this.props.questions) {
-            console.log(this.props.questions)
+            return (
+                <div className="column">
+                    <div className="row">
+                    <QuizQuestion 
+                    questionImg={this.props.questions[0].question_img}
+                    questionText={this.props.questions[0].question_title}
+                    />
+                    </div>
+                    <div className="row">
+                    <QuizAlts 
+                    quizAlternatives={this.props.questions[0].question_alternatives}
+                    />
+                    </div>
+                </div>
+            )
         }
         return (
-            <div>
-                {this.props.questions 
-                ? 
-                <div>
-                    <img src={this.props.questions[0].question_img}/>
-                    <p>{this.props.questions[0].question_title}</p>
-                </div>
-                :null
-                }
-                
+            <div className="ui two column centered grid">
+               <p>Loading</p> 
             </div>
         )
     }

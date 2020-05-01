@@ -8,23 +8,19 @@ import classes from './MusicQuiz.module.css'
 
 class MusicQuiz extends Component {
     render() {
-
-
         return (
-            <div className={classes.MusicQuiz}>
+            <div className={`row ${classes.MusicQuiz}`}>
                 {this.props.quizStarted 
                     ? <Quiz/>
                     :
                     <div>
                         <ThemeSelector />
                         { this.props.selectedQuiz ?
-                        <div className="ui four column centered grid">
+                        <div className="two colum">
                             <button onClick={() => this.props.startQuiz() }>Start</button>
                         </div>: null}
                     </div>
                 }
-                
-                
             </div>
         )
     }

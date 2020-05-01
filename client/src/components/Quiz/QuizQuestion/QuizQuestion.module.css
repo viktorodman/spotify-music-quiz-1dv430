@@ -1,0 +1,12 @@
+.QuizQuestion {
+
+}
+
+.QuizQuestion img {
+    max-width: 500px;
+    border-radius: 10px;
+    -webkit-box-shadow: 3px 18px 44px 12px rgba(0,0,0,0.58);
+    -moz-box-shadow: 3px 18px 44px 12px rgba(0,0,0,0.58);
+    box-shadow: 3px 18px 44px 12px rgba(0,0,0,0.58);
+}
+

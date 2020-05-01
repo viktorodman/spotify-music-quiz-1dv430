@@ -3,8 +3,7 @@ import classes from './SelectorItem.module.css'
 
 const SelectorItem = (props) => {
     return (
-        <div className={classes.SelectorItem}>
-            <div className="column">
+        <div className={`${classes.SelectorItem}`}>
             <input type="radio" name="quiz" id={props.quizId} onClick={() => props.click(props.quizId)}/>
             
             <label htmlFor={props.quizId}>
@@ -17,7 +16,6 @@ const SelectorItem = (props) => {
                 </div>
             </div>
             </label>
-            </div>
             <input type="hidden" name={props.quizId}/>
         </div>
     )

@@ -178,7 +178,7 @@ const createWhoQuestion = (tempArray, correctAltNumber, correctAltTrack, correct
     return {
         question_img: correctAltImg,
         question_number: questionNumber,
-        question_title: 'Who is the artist',
+        question_title: "Who's the artist",
         question_track_url: correctAltTrack,
         question_correct_alt: correctAltNumber,
         question_alternatives: tempArray

@@ -1,0 +1,15 @@
+.QuizAlt {
+    
+}
+
+.QuizAlt img{
+    
+    max-height: 300px;
+    min-height: 300px;
+    height: 100%;
+    border-radius: 5px;
+    -webkit-box-shadow: 3px 18px 44px 12px rgba(0,0,0,0.58);
+    -moz-box-shadow: 3px 18px 44px 12px rgba(0,0,0,0.58);
+    box-shadow: 3px 18px 44px 12px rgba(0,0,0,0.58);
+}
+

@@ -13,7 +13,8 @@ class ThemeSelector extends Component {
             return <div>asd</div>
         }
         return (
-            <div className="ui four column centered grid">
+            <div className="row">
+            <div className="ui four stackable cards">
                 {this.props.quizzes.map(quiz => 
                 (<SelectorItem 
                 quizId={quiz.id} 
@@ -23,6 +24,7 @@ class ThemeSelector extends Component {
                 click={(id) => this.props.selectQuiz(id)}
                 />
                 ))}
+            </div>
             </div>
         )
     }
