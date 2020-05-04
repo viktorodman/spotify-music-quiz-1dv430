@@ -199,7 +199,7 @@ const createWhatQuestion = (tempArray, correctAltNumber, correctAltTrack, correc
         question_img: correctAltImg,
         question_number: questionNumber,
         question_title: 'Whats the song title',
-        question_song_url: correctAltTrack,
+        question_track_url: correctAltTrack,
         question_correct_alt: correctAltNumber,
         question_alternatives: tempArray
     }

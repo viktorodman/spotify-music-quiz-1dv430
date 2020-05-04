@@ -52,27 +52,23 @@ waitForSpotify = async () => {
   }
 
 
-  async componentDidMount() {
+  componentDidMount() {
       this.createSpotifyPlayer()
-      await this.props.playSong(this.props.currentQuestion.question_track_url, this.props.deviceId)
+      /* await this.props.playSong(this.props.currentQuestion.question_track_url, this.props.deviceId) */
   }
 
   
   render() {
+    if(this.props.song) {
+      console.log('HÄR' + this.props.song)
       return (
-          <div>
-             {/*  {
-              this.props.playerReady ?
-              <div>
-                <button onClick={() => this.props.playSong(this.props.deviceId)}>Start</button>
-                <button onClick={() => this.player.resume()}>Resume</button>
-                <button onClick={() => this.player.pause()}>Stop</button>
-              </div>
-              : <p>Loading</p>
-            } */}
-          
+
+          <div songUrl={this.props.playSong(this.props.song, this.props.deviceId)}>        
           </div>
       )
+    } else {
+      return null
+    }
   }
 }
 

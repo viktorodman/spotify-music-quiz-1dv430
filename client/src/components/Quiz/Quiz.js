@@ -24,8 +24,9 @@ export class Quiz extends Component {
     }
 
     render() {
-        const { currentQuestion } = this.props
+        const { currentQuestion} = this.props
         if(currentQuestion) {
+            console.log(currentQuestion.question_track_url)
             return (
                 <div className="jumbotron">
                     <QuizQuestion 
@@ -36,12 +37,13 @@ export class Quiz extends Component {
                     <QuizAlts 
                     quizAlternatives={currentQuestion.question_alternatives}
                     />
-                    <SpotifyPlayer />
+                    <SpotifyPlayer song={currentQuestion.question_track_url}/>
                     <button onClick={() => this.changeQuestion() }>Next Question</button>  
                 </div>
             )
             
         }
+
         return (
             <div className="ui two column centered grid">
                <p>Loading</p> 
@@ -56,7 +58,8 @@ const mapStateToProps = (state) => ({
     selectedQuiz: state.quiz.selectedQuiz,
     playerReady: state.player.playerReady,
     deviceId: state.player.deviceId,
-    prevQuestion: state.quiz.prevQuestion
+    prevQuestion: state.quiz.prevQuestion,
+    currentTrack: state.quiz.currentTrack
 })
 
 export default connect(mapStateToProps, {

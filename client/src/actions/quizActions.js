@@ -7,7 +7,7 @@ export const selectQuiz = (selectedQuiz) => (dispatch) => {
 }
 
 
-export const nextQuestion = () => (dispatch) => {
+export const nextQuestion = () => async (dispatch) => {
     dispatch({ type: NEXT_QUESTION })
 }
 

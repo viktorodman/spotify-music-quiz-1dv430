@@ -8,7 +8,8 @@ const initialState = {
     questions: null,
     currentQuestionNumber: null,
     currentQuestion: null,
-    prevQuestion: null
+    prevQuestion: null,
+    currentTrack: null
 }
 
 
@@ -22,21 +23,23 @@ export default (state = initialState, { type, payload }) => {
     case QUIZ_STARTED:
         return { ...state, quizStarted: true, }
     case FETCH_QUESITONS:
+        const question = {...payload[0]}
         return { 
             ...state,
             questions: payload, 
             currentQuestionNumber: 0,
-            currentQuestion: payload[0]
+            currentQuestion: question,
+            currentTrack: question.question_track_url
         }
     case CHANGING_QUESTION:
         return { ...state, currentQuestion: null }
     case NEXT_QUESTION:
-        
+        const cQuestion = {...state.questions[state.currentQuestionNumber + 1]}
         return {
             ...state,
             currentQuestionNumber: state.currentQuestionNumber + 1,
-            currentQuestion: state.questions[state.currentQuestionNumber + 1],
-            prevQuestion: state.currentQuestion
+            currentQuestion: cQuestion,
+            currentTrack: cQuestion.question_track_url
         }
     default:
         return state
