@@ -7,12 +7,10 @@ const SelectorItem = (props) => {
             <input type="radio" name="quiz" id={props.quizId} onClick={() => props.click(props.quizId)}/>
             
             <label htmlFor={props.quizId}>
-            <div className="ui fluid card">
-                <div className="image">
-                    <img src={props.quizImage} />
-                </div>
-                <div className="content">
-                    <span>{props.quizDescription}</span>
+            <div className="card text-white bg-dark">
+                <img src={props.quizImage} className="card-img" alt="Quiz img"/>
+                <div className="card-img-overlay">
+                    <p className="card-text text-monospace">{props.quizDescription}</p>
                 </div>
             </div>
             </label>

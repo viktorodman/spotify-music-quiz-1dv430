@@ -14,7 +14,7 @@ export class Layout extends Component {
 
     render() {
         return (
-            <div className="ui four column centered grid">
+            <div className="container">
                 <Header />
                 <main>
                     {

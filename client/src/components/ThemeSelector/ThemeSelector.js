@@ -13,8 +13,8 @@ class ThemeSelector extends Component {
             return <div>asd</div>
         }
         return (
-            <div className="row">
-            <div className="ui four stackable cards">
+            <div className="row justify-content-md-center">
+            <div className="card-group">
                 {this.props.quizzes.map(quiz => 
                 (<SelectorItem 
                 quizId={quiz.id} 

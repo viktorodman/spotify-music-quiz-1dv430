@@ -4,20 +4,19 @@ import classes from './QuizAlt.module.css'
 
 export const QuizAlt = (props) => {
     return (
-        <div className={`card ${classes.QuizAlt}`}>
-                <div className="image">
-                    <img src={props.altImg} />
+        <div className={`col col-6 ${classes.QuizAlt}`}>
+            <div className="card text-white bg-dark">
+                <img src={props.altImg} className="card-img" alt="Quiz img"/>
+                <div className="card-img-overlay">
+                    <h5 className="card-title text-monospace text-center bg-dark">{props.altTitle}</h5>
                 </div>
-                <div className="content">
-    <div class="header">{props.altTitle}</div>
-                </div>
+            </div>
         </div>
     )
 }
 
 export default QuizAlt
 
- {/* <div className={`ui very basic segment ${classes.QuizAlt}`}>
-            <img src={props.altImg}/>
-            <p>{props.altTitle}</p>
-        </div> */}
+
+
+ 

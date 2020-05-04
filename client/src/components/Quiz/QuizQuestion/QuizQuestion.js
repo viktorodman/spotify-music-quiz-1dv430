@@ -4,14 +4,16 @@ import classes from './QuizQuestion.module.css'
 
 export const QuizQuestion = (props) => {
     return (
-            <div className={`ui centered card ${classes.QuizQuestion}`}>  
-                <div className="image">
-                    <img src={props.questionImg} />
-                </div>
-                <div className="content">
-                    <span>{props.questionText}</span>
+        <div className="row justify-content-center">
+            <div className={`col ${classes.QuizQuestion}`}>
+                <div className="card text-white bg-dark">
+                    <img src={props.questionImg} className="card-img" alt="Quiz img"/>
+                    <div className="card-img-overlay">
+                        <h5 className="card-title text-monospace text-center bg-dark">{props.questionText}</h5>
+                    </div>
                 </div>
             </div>
+        </div>
     )
 }
 

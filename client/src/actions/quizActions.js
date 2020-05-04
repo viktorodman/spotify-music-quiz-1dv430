@@ -1,4 +1,4 @@
-import { QUIZ_SELECTED, FETCH_POSSIBLE_QUIZZES, QUIZ_STARTED, FETCH_QUESITONS } from './types'
+import { QUIZ_SELECTED, FETCH_POSSIBLE_QUIZZES, QUIZ_STARTED, FETCH_QUESITONS, NEXT_QUESTION, CHANGING_QUESTION } from './types'
 
 
 export const selectQuiz = (selectedQuiz) => (dispatch) => {
@@ -6,6 +6,14 @@ export const selectQuiz = (selectedQuiz) => (dispatch) => {
     dispatch({ type: QUIZ_SELECTED, payload: selectedQuiz})
 }
 
+
+export const nextQuestion = () => (dispatch) => {
+    dispatch({ type: NEXT_QUESTION })
+}
+
+export const changingQuestion = () => (dispatch) => {
+    dispatch({ type: CHANGING_QUESTION })
+}
 
 
 export const getPossibleQuizzes = () => async (dispatch) => {
@@ -30,4 +38,6 @@ export const getQuestions = (id) => async (dispatch) => {
     })
     response = await response.json()
     dispatch({ type: FETCH_QUESITONS, payload: response })
+
+    return response
 }

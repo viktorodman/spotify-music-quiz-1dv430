@@ -34,7 +34,7 @@ waitForSpotify = async () => {
     this.player.addListener('playback_error', ({ message }) => { console.error(message) })
 
     // Playback status updates
-    this.player.addListener('player_state_changed', state => { console.log(state); })
+    this.player.addListener('player_state_changed', state => { console.log(state) })
 
     // Ready
     this.player.addListener('ready', ({ device_id }) => {
@@ -52,14 +52,16 @@ waitForSpotify = async () => {
   }
 
 
-  componentDidMount() {
+  async componentDidMount() {
       this.createSpotifyPlayer()
+      await this.props.playSong(this.props.currentQuestion.question_track_url, this.props.deviceId)
   }
 
+  
   render() {
       return (
           <div>
-              {
+             {/*  {
               this.props.playerReady ?
               <div>
                 <button onClick={() => this.props.playSong(this.props.deviceId)}>Start</button>
@@ -67,7 +69,8 @@ waitForSpotify = async () => {
                 <button onClick={() => this.player.pause()}>Stop</button>
               </div>
               : <p>Loading</p>
-            }
+            } */}
+          
           </div>
       )
   }
@@ -75,7 +78,9 @@ waitForSpotify = async () => {
 
 const mapStateToProps = (state) => ({
   playerReady: state.player.playerReady,
-  deviceId: state.player.deviceId
+  currentSong: state.player.currentSong,
+  deviceId: state.player.deviceId,
+  currentQuestion: state.quiz.currentQuestion
 })
 
 
