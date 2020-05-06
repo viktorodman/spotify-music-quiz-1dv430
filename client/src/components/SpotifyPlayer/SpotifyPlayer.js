@@ -54,7 +54,6 @@ waitForSpotify = async () => {
 
   componentDidMount() {
       this.createSpotifyPlayer()
-      /* await this.props.playSong(this.props.currentQuestion.question_track_url, this.props.deviceId) */
   }
 
   
@@ -74,9 +73,7 @@ waitForSpotify = async () => {
 
 const mapStateToProps = (state) => ({
   playerReady: state.player.playerReady,
-  currentSong: state.player.currentSong,
-  deviceId: state.player.deviceId,
-  currentQuestion: state.quiz.currentQuestion
+  deviceId: state.player.deviceId
 })
 
 

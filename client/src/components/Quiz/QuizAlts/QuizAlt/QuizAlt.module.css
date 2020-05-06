@@ -16,5 +16,46 @@
     box-shadow: 3px 18px 44px 12px rgba(0,0,0,0.58); */
 }
 
+.QuizAlt img:hover {
+    opacity:0.6;
+    cursor: pointer;
+}
+
+.QuizAlt input[type=radio] {
+    display: none;
+  }
+
+  .QuizAlt img:active {
+    opacity:0.4;
+    cursor: pointer;
+}
+
+/* .QuizAlt.card {
+    border-top-width: 10px !important;
+    border-bottom-width: 10px !important;
+    border-left-width: 10px !important;
+    border-right-width: 10px !important;
+    
+} */
+
+.borderThick{
+    border-width: 5px !important;
+}
+
+label {
+    height: 100%;
+    display: block;
+    /* background: white; */
+}
+
+input[type=radio]:checked + label{
+    /* color: lighten(#332f35,60%); */
+    opacity:0.4;
+}
+  
+.QuizAlt input[type=radio]:checked + label > img {
+   /*  border: 20px solid rgb(228, 207, 94); */
+}
+
 
 

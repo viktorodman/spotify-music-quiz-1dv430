@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { getQuestions, nextQuestion, changingQuestion } from '../../actions/quizActions'
+import { getQuestions, nextQuestion, sendAnswer } from '../../actions/quizActions'
 
-import { playSong, changingSong, setCurrentSong, stopSong } from '../../actions/playerActions'
 
 import QuizQuestion from './QuizQuestion/QuizQuestion'
 import QuizAlts from './QuizAlts/QuizAlts'
@@ -26,7 +25,6 @@ export class Quiz extends Component {
     render() {
         const { currentQuestion} = this.props
         if(currentQuestion) {
-            console.log(currentQuestion.question_track_url)
             return (
                 <div className="jumbotron">
                     <QuizQuestion 
@@ -34,10 +32,8 @@ export class Quiz extends Component {
                     questionText={currentQuestion.question_title}
                     />
                     
-                    <QuizAlts 
-                    quizAlternatives={currentQuestion.question_alternatives}
-                    />
-                    <SpotifyPlayer song={currentQuestion.question_track_url}/>
+                    <QuizAlts/>
+                    {/* <SpotifyPlayer song={currentQuestion.question_track_url}/> */}
                     <button onClick={() => this.changeQuestion() }>Next Question</button>  
                 </div>
             )
@@ -56,18 +52,11 @@ const mapStateToProps = (state) => ({
     currentQuestionNumber: state.quiz.currentQuestionNumber,
     currentQuestion: state.quiz.currentQuestion,
     selectedQuiz: state.quiz.selectedQuiz,
-    playerReady: state.player.playerReady,
-    deviceId: state.player.deviceId,
-    prevQuestion: state.quiz.prevQuestion,
-    currentTrack: state.quiz.currentTrack
+    playerReady: state.player.playerReady
 })
 
 export default connect(mapStateToProps, {
     getQuestions,
-    playSong,
     nextQuestion,
-    changingSong,
-    changingQuestion,
-    setCurrentSong,
-    stopSong 
+    sendAnswer
 })(Quiz)

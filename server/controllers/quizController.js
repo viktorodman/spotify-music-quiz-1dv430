@@ -60,6 +60,19 @@ quizController.getQuizzes = async (req, res) => {
     res.json(data)
 }
 
+quizController.checkAnswer = async (req, res) => {
+    const { user_questions } = await User.findOne({ id: req.session.user })
+    const { question_number, alt_number } = req.body
+
+    const question = await user_questions.find(q => q.question_number === question_number)
+    
+    let response = ''
+
+    question.question_correct_alt === alt_number ? response = 'Correct' : response = 'Wrong Answer'
+
+    res.json(response)
+}
+
 
 
 const getUserTracks = async (access_token, id) => {
