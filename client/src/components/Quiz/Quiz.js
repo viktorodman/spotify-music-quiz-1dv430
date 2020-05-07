@@ -34,7 +34,8 @@ export class Quiz extends Component {
                     
                     <QuizAlts/>
                     {/* <SpotifyPlayer song={currentQuestion.question_track_url}/> */}
-                    <button onClick={() => this.changeQuestion() }>Next Question</button>  
+                    {this.props.selectedAnswer ? <button onClick={() => this.changeQuestion() }>Next Question</button>:null}
+                     
                 </div>
             )
             
@@ -52,7 +53,8 @@ const mapStateToProps = (state) => ({
     currentQuestionNumber: state.quiz.currentQuestionNumber,
     currentQuestion: state.quiz.currentQuestion,
     selectedQuiz: state.quiz.selectedQuiz,
-    playerReady: state.player.playerReady
+    playerReady: state.player.playerReady,
+    selectedAnswer: state.quiz.selectedAnswer
 })
 
 export default connect(mapStateToProps, {

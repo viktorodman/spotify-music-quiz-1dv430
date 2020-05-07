@@ -1,4 +1,4 @@
-import { QUIZ_SELECTED, FETCH_POSSIBLE_QUIZZES, QUIZ_STARTED, FETCH_QUESITONS, NEXT_QUESTION, SEND_ANSWER } from './types'
+import { QUIZ_SELECTED, FETCH_POSSIBLE_QUIZZES, QUIZ_STARTED, FETCH_QUESITONS, NEXT_QUESTION, FETCH_ANSWER } from './types'
 
 
 export const selectQuiz = (selectedQuiz) => (dispatch) => {
@@ -12,7 +12,7 @@ export const nextQuestion = () => async (dispatch) => {
 }
 
 export const sendAnswer = (question_number, alt_number) => async (dispatch) => {
-    let response = await fetch('http://localhost:5000/api/quiz/answer', {
+    const response = await fetch('http://localhost:5000/api/quiz/answer', {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify({question_number, alt_number}),
@@ -21,7 +21,9 @@ export const sendAnswer = (question_number, alt_number) => async (dispatch) => {
         }
     })
 
-    console.log(await response.json())
+    const correct_alt_number = await response.json()
+
+    dispatch({ type: FETCH_ANSWER, payload: {alt_number, correct_alt_number} })
 }
 
 export const getPossibleQuizzes = () => async (dispatch) => {

@@ -1,4 +1,4 @@
-import { QUIZ_SELECTED, FETCH_POSSIBLE_QUIZZES, QUIZ_STARTED, FETCH_QUESITONS, NEXT_QUESTION} from '../actions/types'
+import { QUIZ_SELECTED, FETCH_POSSIBLE_QUIZZES, QUIZ_STARTED, FETCH_QUESITONS, NEXT_QUESTION, FETCH_ANSWER} from '../actions/types'
 
 const initialState = {
     quizIsSelected: null,
@@ -7,7 +7,9 @@ const initialState = {
     quizStarted: null,
     questions: null,
     currentQuestionNumber: null,
-    currentQuestion: null
+    currentQuestion: null,
+    selectedAnswer: null,
+    correctAnswer: null
 }
 
 
@@ -35,7 +37,15 @@ export default (state = initialState, { type, payload }) => {
             ...state,
             currentQuestionNumber: state.currentQuestionNumber + 1,
             currentQuestion: cQuestion,
-            currentTrack: cQuestion.question_track_url
+            currentTrack: cQuestion.question_track_url,
+            selectedAnswer: null,
+            correctAnswer: null
+        }
+    case FETCH_ANSWER:
+        return {
+            ...state,
+            selectedAnswer: payload.alt_number,
+            correctAnswer: payload.correct_alt_number
         }
     default:
         return state

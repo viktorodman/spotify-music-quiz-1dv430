@@ -70,7 +70,7 @@ quizController.checkAnswer = async (req, res) => {
 
     question.question_correct_alt === alt_number ? response = 'Correct' : response = 'Wrong Answer'
 
-    res.json(response)
+    res.json(question.question_correct_alt)
 }
 
 
@@ -102,8 +102,6 @@ const getUserPlaylists = async (access_token, user_id) => {
 }
 
 const getTracksFromPlaylist = async (access_token, playlist_id) => {
-    /* const tracks = []
-    for (let index = 0; index < playlists.length; index++) { */
     let response = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
         headers: {
             'Authorization' : `Bearer ${access_token}`
@@ -115,11 +113,6 @@ const getTracksFromPlaylist = async (access_token, playlist_id) => {
    
 
     const tracks = await data.items.map(track => track.track)
-
-       /*  tracks.push(...items)
-    } */
-
-
 
     return tracks
 }
