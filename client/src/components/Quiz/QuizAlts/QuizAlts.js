@@ -29,7 +29,7 @@ export class QuizAlts extends Component {
        })
        return (
            alternatives ? 
-           <div className='row justify-content-md-center'>
+           <div className={`row row-cols-2 justify-content-md-center`}>
                {alternatives}
            </div> :
            <div className='row justify-content-md-center'>

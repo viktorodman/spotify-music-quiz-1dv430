@@ -5,6 +5,7 @@ import { isLoggedIn, logout } from '../../actions/authActions'
 import Header from '../Header/Header'
 import MusicQuiz from '../MusicQuiz/MusicQuiz'
 import LoginPage from '../LoginPage/LoginPage'
+import classes from './Layout.module.css'
 
 
 export class Layout extends Component {
@@ -14,13 +15,15 @@ export class Layout extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className={classes.Layout}>
                 <Header />
+            <div className='container'>
                 <main>
                     {
                     this.props.isAuthenticated ? <MusicQuiz /> : <LoginPage />
                     }
                 </main>
+            </div>
             </div>
         )
     }

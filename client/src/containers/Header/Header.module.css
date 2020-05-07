@@ -1,0 +1,10 @@
+.Header {
+    /* background: rgb(44,62,80);
+    background: radial-gradient(circle, rgba(44,62,80,1) 0%, rgba(52,73,94,1) 100%); */
+    background: #232526; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #232526, #2c2d2e); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #232526, #151515);
+    color: #FFFFFF;
+    padding-bottom: 40px;
+    margin-bottom: 20px;
+}

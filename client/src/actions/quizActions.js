@@ -1,4 +1,4 @@
-import { QUIZ_SELECTED, FETCH_POSSIBLE_QUIZZES, QUIZ_STARTED, FETCH_QUESITONS, NEXT_QUESTION, FETCH_ANSWER } from './types'
+import { QUIZ_SELECTED, FETCH_POSSIBLE_QUIZZES, QUIZ_STARTED, FETCH_QUESITONS, NEXT_QUESTION, FETCH_ANSWER, SHOW_SCORE } from './types'
 
 
 export const selectQuiz = (selectedQuiz) => (dispatch) => {
@@ -9,6 +9,10 @@ export const selectQuiz = (selectedQuiz) => (dispatch) => {
 
 export const nextQuestion = () => async (dispatch) => {
     dispatch({ type: NEXT_QUESTION })
+}
+
+export const showScore = () => async (dispatch) => {
+    dispatch({ type: SHOW_SCORE })
 }
 
 export const sendAnswer = (question_number, alt_number) => async (dispatch) => {

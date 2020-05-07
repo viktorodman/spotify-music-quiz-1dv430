@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { selectQuiz, getPossibleQuizzes } from '../../actions/quizActions'
+import classes from './ThemeSelector.module.css'
 
 import SelectorItem from './SelectorItem/SelectorItem'
 class ThemeSelector extends Component {
@@ -13,7 +14,7 @@ class ThemeSelector extends Component {
             return <div>asd</div>
         }
         return (
-            <div className="row justify-content-md-center">
+            <div className={`row justify-content-md-center ${classes.ThemeSelector}`}>
             <div className="card-group">
                 {this.props.quizzes.map(quiz => 
                 (<SelectorItem 
