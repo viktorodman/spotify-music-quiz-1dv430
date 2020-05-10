@@ -39,7 +39,7 @@ export class Quiz extends Component {
                     />
                     <p>{this.props.currentQuestionNumber}</p>
                     <QuizAlts/>
-                    {/* <SpotifyPlayer song={currentQuestion.question_track_url}/> */}
+                    <SpotifyPlayer song={currentQuestion.question_track_url}/>
                     {this.props.selectedAnswer ? <button onClick={() => this.changeQuestion() }>Next Question</button>:null}
                     </div>
                     }

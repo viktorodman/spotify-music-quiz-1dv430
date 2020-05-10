@@ -8,11 +8,10 @@ export const QuizQuestion = (props) => {
             <div className={`col ${classes.QuizQuestion}`}>
                 <div className="card text-white bg-dark">
                     <img src={props.questionImg} className="card-img" alt="Quiz img"/>
-                    <div className="card-img-overlay">
-                        <h5 className="card-title text-monospace text-center bg-dark">{props.questionText}</h5>
-                    </div>
                 </div>
             </div>
+            <div className="w-100"></div>
+            <div className="col"><h5 className={`text-center ${classes.QuestionText}`}>{props.questionText}</h5></div>
         </div>
     )
 }

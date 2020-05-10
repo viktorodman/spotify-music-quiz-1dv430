@@ -1,6 +1,3 @@
-.QuizAlt {
-    
-}
 
 .QuizAlt {
     max-width: 200px;
@@ -8,16 +5,10 @@
 }
 
 .QuizAlt img{
-    
-    height: 200px;
-    /* border-radius: 5px; */
-    /* -webkit-box-shadow: 3px 18px 44px 12px rgba(0,0,0,0.58);
-    -moz-box-shadow: 3px 18px 44px 12px rgba(0,0,0,0.58);
-    box-shadow: 3px 18px 44px 12px rgba(0,0,0,0.58); */
+    height: 150px;
 }
 
 .QuizAlt img:hover {
-    opacity:0.6;
     cursor: pointer;
 }
 
@@ -26,17 +17,22 @@
   }
 
   .QuizAlt img:active {
-    opacity:0.4;
     cursor: pointer;
 }
 
-/* .QuizAlt.card {
-    border-top-width: 10px !important;
-    border-bottom-width: 10px !important;
-    border-left-width: 10px !important;
-    border-right-width: 10px !important;
-    
-} */
+.QuizAlt {
+    transition: .40s, transform .40s ease;
+    -moz-transition: .40s, transform .40s ease;
+    -webkit-transition: .40s, transform .40s ease;
+}
+  
+.QuizAlt:hover {
+    -ms-transform: scale(1.06); 
+    -webkit-transform: scale(1.06);
+    transform: scale(1.06);
+    filter: drop-shadow(0 0 0.8rem #3cc8d093);
+}
+
 
 .borderThick{
     border-width: 3px !important;
@@ -50,7 +46,7 @@ label {
 
 input[type=radio]:checked + label{
     /* color: lighten(#332f35,60%); */
-    opacity:0.4;
+    /* opacity:0.4; */
 }
   
 .QuizAlt input[type=radio]:checked + label > img {
