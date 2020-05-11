@@ -42,12 +42,9 @@ export class Quiz extends Component {
                     <SpotifyPlayer song={currentQuestion.question_track_url}/>
                     {this.props.selectedAnswer ? <button onClick={() => this.changeQuestion() }>Next Question</button>:null}
                     </div>
-                    }
-                    
-                     
+                    } 
                 </div>
             )
-            
         }
 
         return (
