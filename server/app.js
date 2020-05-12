@@ -64,7 +64,7 @@ app.use('/api/quiz', require('./routes/quizRouter'))
 // ======================================================//
 
 
-app.use('*', (req, res) => res.status(404).send('Not found'))
+/* app.use('*', (req, res) => res.status(404).send('Not found')) */
 
 // Error handler.
 
