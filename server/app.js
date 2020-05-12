@@ -68,7 +68,6 @@ app.use('/api/quiz', require('./routes/quizRouter'))
 
 // Error handler.
 
-console.log(object)
 
 
 if (process.env.NODE_ENV === 'production') {           
