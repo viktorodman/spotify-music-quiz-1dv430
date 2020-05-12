@@ -1,10 +1,17 @@
 .Header {
     /* background: rgb(44,62,80);
     background: radial-gradient(circle, rgba(44,62,80,1) 0%, rgba(52,73,94,1) 100%); */
-    background: #232526; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, #232526, #2c2d2e); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to left, #232526, #151515);
-    color: #FFFFFF;
+   /*  background: #232526; 
+  background: -webkit-linear-gradient(to left, #232526, #2c2d2e);
+  background: linear-gradient(to left, #232526, #151515); */
+  /* background-color: #FF851B; */
+  background: #ED213A;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #93291E, #ED213A);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #93291E, #ED213A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    color: black;
     padding-bottom: 20px;
     margin-bottom: 20px;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

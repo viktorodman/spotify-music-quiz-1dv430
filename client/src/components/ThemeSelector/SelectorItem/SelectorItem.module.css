@@ -4,16 +4,28 @@
     padding-right: 15px;
     padding-left: 15px;
     max-width: 260px;
+    filter: drop-shadow(0 5px 0.4rem rgb(201, 0, 0));
     background-color: transparent;
+    transition: .40s, transform .40s ease;
+    -moz-transition: .40s, transform .40s ease;
+    -webkit-transition: .40s, transform .40s ease;
 }
 .SelectorItem img {
-    opacity:0.7;
+   /*  opacity:0.7; */
     /* filter: drop-shadow(0 0 1.0rem #3cc8d093); */
 }
 
-.SelectorItem img:hover {
-    opacity:0.6;
-    cursor: pointer;
+.SelectorItem h5 {
+    text-shadow: #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px,
+             #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px;
+}
+
+.SelectorItem:hover {
+    -ms-transform: scale(1.1); 
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    filter: drop-shadow(0 5px 0.4rem rgb(255, 31, 31));
+    /* filter: drop-shadow(0 0 0.8rem #3cc8d093); */
 }
 
 .SelectorItem input[type=radio] {

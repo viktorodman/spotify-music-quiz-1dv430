@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "devstart": "concurrently \"cd server && npm run devstart\" \"cd client && npm start\" "
+    "start": "cd server && npm start",
+    "devstart": "concurrently \"cd server && npm run devstart\" \"cd client && npm start\" ",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "repository": {
     "type": "git",

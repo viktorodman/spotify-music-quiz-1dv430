@@ -1,4 +1,4 @@
 .ThemeSelector {
    background-color: transparent;
-   filter: drop-shadow(0 0 0.5rem rgba(127, 219, 255, 0.516));
+   /* filter: drop-shadow(0 10px 0.8rem rgb(227, 30, 30)); */
 }

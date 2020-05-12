@@ -3,11 +3,13 @@
 const authController = {}
 const User = require('../models/User')
 
+const scopes = "streaming playlist-read-collaborative user-modify-playback-state user-read-private playlist-read-private"
+
 authController.login = async (req, res) => {
     res.redirect('https://accounts.spotify.com/authorize' + 
         '?response_type=code' + 
         '&client_id=' + process.env.SPOTIFY_CLIENT_ID +
-        (process.env.SPOTIFY_SCOPES ? '&scope=' + encodeURIComponent(process.env.SPOTIFY_SCOPES) : '') +
+        (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
         '&redirect_uri=' + encodeURIComponent(process.env.SPOTIFY_REDIRECT_URI))
 }
 

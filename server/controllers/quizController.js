@@ -3,12 +3,11 @@
 const quizController = {}
 
 const User = require('../models/User')
-/* const Question = require('../models/Question')
-const Alternative = require('../models/Alternative') */
+
 const fetch = require('node-fetch')
 
 // DEAFAULT Quizess
-const quizess = [
+const quizess = [ 
     {
         id: '37i9dQZF1DWTJ7xPn4vNaz',
         image: 'https://i.scdn.co/image/ab67706f00000002f0c5c7ed627d220ee59581ca',
@@ -25,52 +24,71 @@ const quizess = [
         description: '90s'
     }
 ]
-//
 
 quizController.createQuiz = async (req, res) => {
+    try {
+        const { access_token, id } = await User.findOne({ id: req.session.user })
 
-    const { access_token, id } = await User.findOne({ id: req.session.user })
+        const { playlist_id } = req.body
 
-    const { playlist_id } = req.body
+        let tracks = null
 
-    let tracks = null
+        if (playlist_id === id) {
+            tracks = await getUserTracks(access_token, id)
+        } else {
+            tracks = await getTracksFromPlaylist(access_token, playlist_id)
+        }
+        
+        const filteredTracks = await filterTracks(tracks.flat())
+        const questions = await createQuestions(filteredTracks, access_token)
+        const clientData = await saveQuestions(questions, id)
 
-
-
-    if (playlist_id === id) {
-        tracks = await getUserTracks(access_token, id)
-    } else {
-        tracks = await getTracksFromPlaylist(access_token, playlist_id)
+        res.json(clientData)
+    } catch (error) {
+        res.json(error)
     }
-    
-    const filteredTracks = await filterTracks(tracks.flat())
-    const questions = await createQuestions(filteredTracks, access_token)
-    const clientData = await saveQuestions(questions, id)
-
-    res.json(clientData)
 }
 
 quizController.getQuizzes = async (req, res) => {
-    const { access_token, images, id } = await User.findOne({ id: req.session.user })
+    try {
+        const { images, id } = await User.findOne({ id: req.session.user })
 
-    const image = images[0]
+        const image = images[0]
 
-    const data = [{ id, image, description: 'Based on your playlists' } , ...quizess]
+        const data = [{ id, image, description: 'Based on your playlists' } , ...quizess]
     
     res.json(data)
+    } catch (error) {
+        res.json(error.message)
+    }
 }
 
 quizController.checkAnswer = async (req, res) => {
-    const { user_questions } = await User.findOne({ id: req.session.user })
-    const { question_number, alt_number } = req.body
+    try {
+        const { user_questions } = await User.findOne({ id: req.session.user })
+        const { question_number, alt_number } = req.body
 
-    const question = await user_questions.find(q => q.question_number === question_number)
-    
-    let response = ''
+        const question = await user_questions.find(q => q.question_number === question_number)
+        
+        let response = ''
 
-    question.question_correct_alt === alt_number ? response = 'Correct' : response = 'Wrong Answer'
+        question.question_correct_alt === alt_number ? response = 'Correct' : response = 'Wrong Answer'
 
-    res.json(question.question_correct_alt)
+        res.json(question.question_correct_alt)
+    } catch (error) {
+        res.json(error)
+    }
+}
+
+
+quizController.authorize = (req, res, next) => {
+    if (!req.session.user) {
+      return next(res.status(403).json({
+          status: '403',
+          message: 'User not Authorized'
+      }))
+    }
+    next()
 }
 
 
