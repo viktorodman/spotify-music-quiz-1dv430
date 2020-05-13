@@ -6,6 +6,8 @@ const fetch = require('node-fetch')
 const { URLSearchParams } = require('url')
 const User = require('../models/User')
 
+let redirect_uri = process.env.REDIRECT_URI || 'http://localhost:5000/api/callback'
+
 callbackController.index = async (req, res) => {
     const { access_token, refresh_token, expires_in } = await fetchUserCredentials(req.query.code)
     const { display_name, id, images, product } = await getUserInfo(access_token)
@@ -28,14 +30,14 @@ callbackController.index = async (req, res) => {
     
     req.session.user = user.id
    
-    res.redirect('http://localhost:3000')
+    res.redirect(res.baseUrl)
 }
 
 const fetchUserCredentials = async (code) => {
     const params = new URLSearchParams()
     params.append('grant_type', 'authorization_code')
     params.append('code', code)
-    params.append('redirect_uri', process.env.SPOTIFY_REDIRECT_URI)
+    params.append('redirect_uri', redirect_uri)
 
     let response = await fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
