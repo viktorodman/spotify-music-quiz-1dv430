@@ -26,8 +26,8 @@ export class Quiz extends Component {
     }
 
     render() {
-        const { currentQuestion} = this.props
-        if(currentQuestion) {
+        const { currentQuestion, userToken } = this.props
+        if(currentQuestion && userToken) {
             return (
                 <div className={`jumbotron ${classes.Quiz}`}>
                     {this.props.shouldShowScore 
@@ -61,7 +61,8 @@ const mapStateToProps = (state) => ({
     selectedQuiz: state.quiz.selectedQuiz,
     playerReady: state.player.playerReady,
     selectedAnswer: state.quiz.selectedAnswer,
-    shouldShowScore: state.quiz.shouldShowScore
+    shouldShowScore: state.quiz.shouldShowScore,
+    userToken: state.auth.userToken
 })
 
 export default connect(mapStateToProps, {
