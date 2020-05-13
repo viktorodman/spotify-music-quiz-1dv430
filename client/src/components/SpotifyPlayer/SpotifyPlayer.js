@@ -47,11 +47,12 @@ waitForSpotify = async () => {
 
     // Connect to the player!
     this.player.connect();
+    console.log("TESTSETSET")
   }
 
 
-  componentDidMount() {
-      this.createSpotifyPlayer()
+  async componentDidMount() {
+      await this.createSpotifyPlayer()
   }
 
   
