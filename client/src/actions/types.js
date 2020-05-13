@@ -9,4 +9,5 @@ export const FETCH_QUESITONS = 'FETCH_QUESITONS'
 export const NEXT_QUESTION = 'NEXT_QUESTION'
 export const FETCH_ANSWER = 'FETCH_ANSWER'
 export const SHOW_SCORE = 'SHOW_SCORE'
+export const USER_TOKEN = 'USER_TOKEN'
 

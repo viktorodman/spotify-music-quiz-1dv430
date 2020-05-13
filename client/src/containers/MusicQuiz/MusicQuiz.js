@@ -2,11 +2,18 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { startQuiz } from '../../actions/quizActions'
 
+import { getToken } from '../../actions/authActions'
+
 import ThemeSelector from '../../components/ThemeSelector/ThemeSelector'
 import Quiz from '../../components/Quiz/Quiz'
 import classes from './MusicQuiz.module.css'
 
 class MusicQuiz extends Component {
+
+    componentDidMount() {
+        this.props.getToken()
+    }
+
     render() {
         return (
             <div className={`col ${classes.MusicQuiz}`}>
@@ -33,4 +40,4 @@ const mapStateToProps = (state) => ({
     quizStarted: state.quiz.quizStarted
 })
 
-export default connect(mapStateToProps, { startQuiz })(MusicQuiz)
+export default connect(mapStateToProps, { startQuiz, getToken })(MusicQuiz)

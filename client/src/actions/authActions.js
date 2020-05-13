@@ -16,5 +16,5 @@ export const logout = () => async (dispatch) => {
 export const getToken = () => async (dispatch) => {
     let response = await fetch('/api/auth/getToken', {method: 'GET', credentials: 'include'})
     response = await response.json()
-    return response.data
+    dispatch({ type: USER_TOKEN, payload: response.data})
 }

@@ -28,9 +28,13 @@ callbackController.index = async (req, res) => {
         await user.save()
     }
     
-    req.session.user = user.id
-   
-    res.redirect('/')
+    req.session.user = user.id 
+    
+    let re = (process.env.NODE_ENV === 'production') ? '/' : 'http://localhost:3000'
+
+    console.log(re)
+
+    res.redirect(re)
 }
 
 const fetchUserCredentials = async (code) => {

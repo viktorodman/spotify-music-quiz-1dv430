@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { setDevice, playSong } from '../../actions/playerActions'
-import { getToken } from '../../actions/authActions' 
 import { connect } from 'react-redux'
 
 export class SpotifyPlayer extends Component {
@@ -22,8 +21,7 @@ waitForSpotify = async () => {
     this.player = new Player({
       name: 'Web Playback SDK Quick Start Player',
       getOAuthToken: async cb => {
-        const token = await this.props.getToken()
-         cb(token) 
+         cb(this.props.userToken) 
         }
     })
 
@@ -73,9 +71,10 @@ waitForSpotify = async () => {
 
 const mapStateToProps = (state) => ({
   playerReady: state.player.playerReady,
-  deviceId: state.player.deviceId
+  deviceId: state.player.deviceId,
+  userToken: state.auth.userToken
 })
 
 
 
-export default connect(mapStateToProps, { setDevice, getToken, playSong })(SpotifyPlayer)
+export default connect(mapStateToProps, { setDevice, playSong })(SpotifyPlayer)
