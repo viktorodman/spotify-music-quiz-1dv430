@@ -70,11 +70,13 @@ app.use('/api/quiz', require('./routes/quizRouter'))
 
 
 
-if (process.env.NODE_ENV === 'production') {           
-  app.use(express.static("client/build"))
+if (process.env.NODE_ENV === 'production') {   
+  const buildDir = path.join(__dirname, '../client/build')
+  
+  app.use(express.static(buildDir))
 
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..' ,'client', 'build', 'index.html'))
+    res.sendFile(path.join(buildDir, 'index-html'))
   })
 }
 
