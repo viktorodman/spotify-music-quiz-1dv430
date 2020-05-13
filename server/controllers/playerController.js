@@ -21,7 +21,7 @@ playerController.play = async (req, res) => {
         } 
     })
 
-    console.log(req.body.data) 
+    console.log(spotify_uri, device_id) 
     res.json('play')
 }
 playerController.pause = async (req, res) => {

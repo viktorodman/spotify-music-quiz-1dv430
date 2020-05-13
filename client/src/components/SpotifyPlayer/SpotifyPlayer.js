@@ -58,10 +58,9 @@ waitForSpotify = async () => {
   render() {
     if(this.props.song && this.props.deviceId) {
       console.log('HÄR' + this.props.song)
-      this.props.playSong(this.props.song, this.props.deviceId)
       return (
 
-          <div>        
+          <div songUrl={this.props.playSong(this.props.song, this.props.deviceId)}>        
           </div>
       )
     } else {
