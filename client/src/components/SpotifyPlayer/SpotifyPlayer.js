@@ -47,7 +47,7 @@ waitForSpotify = async () => {
 
     // Connect to the player!
     this.player.connect();
-    console.log("TESTSETSET")
+    console.log('Hallå', this.props.song, this.props.deviceId, this.props.userToken)
   }
 
 
