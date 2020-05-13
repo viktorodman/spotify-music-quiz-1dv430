@@ -10,8 +10,8 @@ import classes from './MusicQuiz.module.css'
 
 class MusicQuiz extends Component {
 
-    componentDidMount() {
-        this.props.getToken()
+    async componentDidMount() {
+        await this.props.getToken()
     }
 
     render() {
