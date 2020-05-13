@@ -37,6 +37,7 @@ waitForSpotify = async () => {
     // Ready
     this.player.addListener('ready', ({ device_id }) => {
       console.log('Ready with Device ID', device_id)
+      this.player.connect();
       this.props.setDevice(device_id)
   })
 
@@ -46,7 +47,9 @@ waitForSpotify = async () => {
     })
 
     // Connect to the player!
-    this.player.connect();
+    
+
+
   }
 
 
