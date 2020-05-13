@@ -28,8 +28,8 @@ const Question = new mongoose.Schema({
 const userSchema = new mongoose.Schema({
   display_name: { type: String, required: true, unique: true },
   id: { type: String, required: true, unique: true },
-  images: {type: Array, required: true, unique: true},
-  product: {type: String, required: true, unique: true},
+  images: {type: Array, required: true},
+  product: {type: String, required: true},
   access_token: {type: String, required: true, unique: true}, 
   refresh_token: {type: String, required: true, unique: true},
   user_questions: [Question]
