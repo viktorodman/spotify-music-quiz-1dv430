@@ -29,7 +29,6 @@ export const playSong = (spotify_uri, device_id) => async (dispatch) => {
         }
     })
     response = await response.json()
-    console.log(await response)
 
     return response
 }
