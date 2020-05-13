@@ -16,7 +16,7 @@ export const showScore = () => async (dispatch) => {
 }
 
 export const sendAnswer = (question_number, alt_number) => async (dispatch) => {
-    const response = await fetch('http://localhost:5000/api/quiz/answer', {
+    const response = await fetch('/api/quiz/answer', {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify({question_number, alt_number}),
@@ -31,7 +31,7 @@ export const sendAnswer = (question_number, alt_number) => async (dispatch) => {
 }
 
 export const getPossibleQuizzes = () => async (dispatch) => {
-    let response = await fetch('http://localhost:5000/api/quiz/getQuizzes', {method: 'GET', credentials: 'include'})
+    let response = await fetch('/api/quiz/getQuizzes', {method: 'GET', credentials: 'include'})
     response = await response.json()
 
     dispatch({ type: FETCH_POSSIBLE_QUIZZES, payload: response })
@@ -42,7 +42,7 @@ export const startQuiz = () => (dispatch) => {
 }
 
 export const getQuestions = (id) => async (dispatch) => {
-    let response = await fetch('http://localhost:5000/api/quiz/createQuiz', {
+    let response = await fetch('/api/quiz/createQuiz', {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify({playlist_id: id}),

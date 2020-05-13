@@ -7,7 +7,7 @@ export const setDevice = (id) => async (dispatch) => {
 
 
 export const stopSong = (device_id) => async (dispatch) => {
-    let response = await fetch('http://localhost:5000/api/player/pause', {
+    let response = await fetch('/api/player/pause', {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify({ device_id }),
@@ -20,7 +20,7 @@ export const stopSong = (device_id) => async (dispatch) => {
 }
 
 export const playSong = (spotify_uri, device_id) => async (dispatch) => {
-    let response = await fetch('http://localhost:5000/api/player/play', {
+    let response = await fetch('/api/player/play', {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify({ spotify_uri, device_id }),
