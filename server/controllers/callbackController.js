@@ -30,7 +30,7 @@ callbackController.index = async (req, res) => {
     
     req.session.user = user.id
    
-    res.redirect(req.baseUrl)
+    res.redirect('/')
 }
 
 const fetchUserCredentials = async (code) => {
