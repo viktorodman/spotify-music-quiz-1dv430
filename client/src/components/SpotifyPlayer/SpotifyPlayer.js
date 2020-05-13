@@ -52,6 +52,7 @@ waitForSpotify = async () => {
 
   async componentDidMount() {
       await this.createSpotifyPlayer()
+      console.log('test')
   }
 
   
