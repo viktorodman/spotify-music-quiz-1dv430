@@ -3,7 +3,7 @@
 const authController = {}
 const User = require('../models/User')
 
-const scopes = "streaming playlist-read-collaborative user-modify-playback-state user-read-private playlist-read-private"
+const scopes = "streaming playlist-read-collaborative user-modify-playback-state user-read-private user-read-email playlist-read-private"
 let redirect_uri = process.env.REDIRECT_URI || 'http://localhost:5000/api/callback'
 
 
