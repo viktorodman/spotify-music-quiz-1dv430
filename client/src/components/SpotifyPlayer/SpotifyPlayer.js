@@ -51,7 +51,7 @@ waitForSpotify = async () => {
    /*  await this.player.connect();
   } */
 
-  connectToPlayer() {
+  async connectToPlayer() {
     if (this.player) {
       clearTimeout(this.connectToPlayerTimeout)
     // add event listeners to player getting into "ready" state
@@ -59,7 +59,7 @@ waitForSpotify = async () => {
       ({device_id}) => {
         this.props.setDevice(device_id)
       })
-      this.player.connect()
+      await this.player.connect()
     } else {
         this.connectToPlayerTimeout = setTimeout(this.connectToPlayer.bind(this), 1000)
     }
