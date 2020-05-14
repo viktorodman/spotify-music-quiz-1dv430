@@ -21,6 +21,9 @@ playerController.play = async (req, res) => {
         } 
     })
 
+    console.log('URI: ' + spotify_uri)
+    console.log('DEVICE: ' + device_id)
+
     console.log(await test) 
     res.json('play')
 }
