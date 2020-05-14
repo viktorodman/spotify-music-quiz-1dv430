@@ -17,4 +17,6 @@ export const getToken = () => async (dispatch) => {
     let response = await fetch('/api/auth/getToken', {method: 'GET', credentials: 'include'})
     response = await response.json()
     dispatch({ type: USER_TOKEN, payload: response.data})
+
+    return response.data
 }

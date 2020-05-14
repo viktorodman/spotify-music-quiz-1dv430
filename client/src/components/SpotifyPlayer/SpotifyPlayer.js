@@ -1,113 +1,126 @@
 import React, { Component } from 'react'
 import { setDevice, playSong } from '../../actions/playerActions'
+import { getToken } from '../../actions/authActions'
 import { connect } from 'react-redux'
 
 export class SpotifyPlayer extends Component {
   player = null
     
-waitForSpotify = async () => {
+  /* async waitForSpotify() {
     return new Promise(resolve => {
-      window.Spotify ? resolve (window.Spotify)
-                      : window.onSpotifyWebPlaybackSDKReady = () => {
-                        resolve(window.Spotify)
-                      }
+     if ('Spotify' in window) {
+       resolve()
+     } else {
+      window.onSpotifyWebPlaybackSDKReady = () => {
+        resolve();
+      }
+     }
     })
   }
 
-  createSpotifyPlayer = async () => {
+  
+
+  async createSpotifyPlayer() {
     
-    const { Player } = await this.waitForSpotify()
+    const { Player } = window.Spotify
     
     this.player = new Player({
       name: 'Quiz Player',
-      getOAuthToken: cb => {
-         cb(this.props.userToken) 
+      getOAuthToken: async cb => {
+        const token = await this.props.getToken()
+         cb(token) 
         }
     })
+
+
+    this.player.on("initialization_error", e => {
+      console.log(e.message)
+    });
+
+    this.player.on("authentication_error", e => {
+      console.log(e.message)
+    });
+
+    this.player.on("account_error", e => {
+      console.log(e.message)
+    });
+
+    this.player.on("playback_error", e => {
+      console.log(e.message)
+    });
+
+    this.player.on("player_state_changed", async state => {
+      console.log(state)
+    });
+
+    this.player.on("ready", data => {
+      console.log(data)
+      this.props.setDevice(data.device_id)
+    });
+    this.player.connect().then(success => {
+      if (success) {
+        console.log('The Web Playback SDK successfully connected to Spotify!');
+      }
+    })
   }
-    // Error handling
-   /*  this.player.addListener('initialization_error', ({ message }) => { console.error(message) })
-    this.player.addListener('authentication_error', ({ message }) => { console.error(message) })
-    this.player.addListener('account_error', ({ message }) => { console.error(message) })
-    this.player.addListener('playback_error', ({ message }) => { console.error(message) }) */
+  
 
-    // Playback status updates
-   /*  this.player.addListener('player_state_changed', state => { console.log(state) }) */
+  async componentWillMount() {
+    await this.waitForSpotify()
 
-    // Ready
-   /*  this.player.addListener('ready', ({ device_id }) => {
-      console.log('Ready with Device ID', device_id)
-      
-      this.props.setDevice(device_id)
-  }) */
+    await this.createSpotifyPlayer()
 
-    // Not Ready
-   /*  this.player.addListener('not_ready', ({ device_id }) => {
-      console.log('Device ID has gone offline', device_id)
-    }) */
-
-    // Connect to the player!
     
-   /*  await this.player.connect();
   } */
-
-  async connectToPlayer() {
-    if (this.player) {
-      clearTimeout(this.connectToPlayerTimeout)
-    // add event listeners to player getting into "ready" state
-     this.player.addListener('ready', 
-      ({device_id}) => {
-        this.props.setDevice(device_id)
-      })
-      await this.player.connect()
-    } else {
-        this.connectToPlayerTimeout = setTimeout(this.connectToPlayer.bind(this), 1000)
-    }
-  }
 
 
   componentDidMount() {
-    this.createSpotifyPlayer().then(() => this.connectToPlayer())
-    /* window.onSpotifyWebPlaybackSDKReady = () => {
-      const token = this.props.userToken
-      const player = new Spotify.Player({
-        name: 'Web Playback SDK Quick Start Player',
-        getOAuthToken: cb => { cb(token); }
-      }); */
-    
-      // Error handling
-     /*  player.addListener('initialization_error', ({ message }) => { console.error(message) })
-      player.addListener('authentication_error', ({ message }) => { console.error(message) })
-      player.addListener('account_error', ({ message }) => { console.error(message) })
-      player.addListener('playback_error', ({ message }) => { console.error(message) })
-     */
-      // Playback status updates
-      /* player.addListener('player_state_changed', state => { console.log(state); })
-     */
-      // Ready
-      /* player.addListener('ready', ({ device_id }) => {
-        console.log('Ready with Device ID', device_id)
-        this.props.setDevice(device_id)
-      }) */
-    
-      // Not Ready
-     /*  player.addListener('not_ready', ({ device_id }) => {
-        console.log('Device ID has gone offline', device_id)
-      }) */
-    
-      // Connect to the player!
-      /* player.connect() */
-   /*  } */
+    // Register callback for Spotify Web Playback SDK
+    window.onSpotifyWebPlaybackSDKReady = () => {  
+      this.player = new window.Spotify.Player({
+        name: 'Test Player',
+        getOAuthToken: callback => {
+          callback(this.props.userToken);
+        },
+        volume: 1
+      });
 
+      this.player.addListener('initialization_error', ({ message }) => { console.error(message); });
+      this.player.addListener('authentication_error', ({ message }) => { console.error(message); });
+      this.player.addListener('account_error', ({ message }) => { console.error(message); });
+      this.player.addListener('playback_error', ({ message }) => { console.error(message); });
+      this.player.addListener('ready', ({ device_id }) => {
+        console.log('Ready with Device ID', device_id);
+        this.props.setDevice(device_id)
+      });
+      this.player.addListener('not_ready', ({ device_id }) => { console.log('Device ID has gone offline', device_id); });
+      this.player.addListener('player_state_changed', state => {
+        // Check if playback has been paused
+        console.log(state);
+        
+      });
+
+      // Check playback progress periodically
+      
+
+      this.player.connect();
+    }
+
+    // Load Spotify Web Playback SDK
+    let s = document.createElement('script');
+    s.src = 'https://sdk.scdn.co/spotify-player.js';
+    s.async = true;
+    document.body.append(s);
   }
 
   
   render() {
     if(this.props.song && this.props.deviceId) {
-      console.log('HÄR' + this.props.song)
+      this.props.playSong(this.props.song, this.props.deviceId)
       return (
 
-          <div songUrl={this.props.playSong(this.props.song, this.props.deviceId)}>        
+          <div>
+                  
           </div>
       )
     } else {
@@ -124,4 +137,4 @@ const mapStateToProps = (state) => ({
 
 
 
-export default connect(mapStateToProps, { setDevice, playSong })(SpotifyPlayer)
+export default connect(mapStateToProps, { setDevice, playSong, getToken })(SpotifyPlayer)

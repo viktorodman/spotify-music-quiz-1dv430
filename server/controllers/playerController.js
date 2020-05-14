@@ -12,7 +12,7 @@ playerController.play = async (req, res) => {
     const { access_token } = await User.findOne({ id: req.session.user })
     
 
-    await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
+    const test = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
         method: 'PUT',
           body: JSON.stringify({ uris: [spotify_uri] }),
           headers: {
@@ -21,7 +21,7 @@ playerController.play = async (req, res) => {
         } 
     })
 
-    console.log(spotify_uri, device_id) 
+    console.log(await test) 
     res.json('play')
 }
 playerController.pause = async (req, res) => {

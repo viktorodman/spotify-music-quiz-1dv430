@@ -11,7 +11,8 @@ import classes from './MusicQuiz.module.css'
 class MusicQuiz extends Component {
 
     async componentDidMount() {
-        await this.props.getToken()
+        const token = await this.props.getToken()
+        console.log(await token)
     }
 
     render() {
