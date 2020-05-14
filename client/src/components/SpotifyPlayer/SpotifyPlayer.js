@@ -18,7 +18,7 @@ waitForSpotify = async () => {
     
     const { Player } = await this.waitForSpotify()
     
-    this.player = new Player({
+    this.player = await new Player({
       name: 'Web Playback SDK Quick Start Player',
       getOAuthToken: cb => {
          cb(this.props.userToken) 
@@ -48,14 +48,12 @@ waitForSpotify = async () => {
 
     // Connect to the player!
     
-    this.player.connect();
-    setTimeout(console.log('test'), 1000)
+    await this.player.connect();
   }
 
 
-  async componentDidMount() {
-      await this.createSpotifyPlayer()
-      console.log('test')
+  componentDidMount() {
+    this.createSpotifyPlayer()
   }
 
   
