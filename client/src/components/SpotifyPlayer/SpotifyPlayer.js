@@ -19,7 +19,7 @@ waitForSpotify = async () => {
     const { Player } = await this.waitForSpotify()
     
     this.player = await new Player({
-      name: 'Web Playback SDK Quick Start Player',
+      name: 'Quiz Player',
       getOAuthToken: cb => {
          cb(this.props.userToken) 
         }
