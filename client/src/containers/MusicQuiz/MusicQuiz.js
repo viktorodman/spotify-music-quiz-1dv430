@@ -6,7 +6,9 @@ import { getToken } from '../../actions/authActions'
 
 import ThemeSelector from '../../components/ThemeSelector/ThemeSelector'
 import Quiz from '../../components/Quiz/Quiz'
+import SpotifyPlayer from '../../components/SpotifyPlayer/SpotifyPlayer'
 import classes from './MusicQuiz.module.css'
+
 
 class MusicQuiz extends Component {
 
@@ -18,6 +20,7 @@ class MusicQuiz extends Component {
     render() {
         return (
             <div className={`col ${classes.MusicQuiz}`}>
+                <SpotifyPlayer/>
                 {this.props.quizStarted 
                     ? <Quiz/>
                     :
