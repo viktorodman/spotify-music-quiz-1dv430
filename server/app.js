@@ -7,7 +7,6 @@ const app = express()
 const server = require('http').createServer(app)
 const session = require('express-session')
 const cors = require('cors')
-/* const logger = require('morgan') */
 const mongoose = require('./configs/mongoose')
 
 
@@ -26,7 +25,12 @@ require('dotenv').config()
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-/* app.use(logger('dev')) */
+if (process.env.NODE_ENV !== 'production') {   
+  const logger = require('morgan')
+  app.use(logger('dev'))
+}
+
+
 
 const sessionOptions = {
     name: 'spooootify',
