@@ -10,4 +10,8 @@ export const NEXT_QUESTION = 'NEXT_QUESTION'
 export const FETCH_ANSWER = 'FETCH_ANSWER'
 export const SHOW_SCORE = 'SHOW_SCORE'
 export const USER_TOKEN = 'USER_TOKEN'
+export const TIMER_STATUS = 'TIMER_STATUS'
+export const DECREMENT_TIMER = 'DECREMENT_TIMER'
+export const QUIZ_STATUS = 'QUIZ_STATUS'
+export const RESET_QUIZ = 'RESET_QUIZ'
 

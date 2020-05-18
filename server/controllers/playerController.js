@@ -5,7 +5,6 @@ const playerController = {}
 const fetch = require('node-fetch')
 const User = require('../models/User')
 
-const spotify_uri = 'spotify:track:0jP41H2AdT6m9QxoGgoasW'
 
 playerController.play = async (req, res) => {
     const { spotify_uri, device_id } = req.body
@@ -21,10 +20,6 @@ playerController.play = async (req, res) => {
         } 
     })
 
-    console.log('URI: ' + spotify_uri)
-    console.log('DEVICE: ' + device_id)
-
-    console.log(await test) 
     res.json('play')
 }
 playerController.pause = async (req, res) => {
@@ -39,7 +34,6 @@ playerController.pause = async (req, res) => {
         }
     })
 
-    console.log(req.body.data)
     res.json('pause')
 }
 

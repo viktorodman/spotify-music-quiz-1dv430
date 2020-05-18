@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectQuiz, getPossibleQuizzes } from '../../actions/quizActions'
+import { selectQuiz, getPossibleQuizzes, startQuiz } from '../../actions/quizActions'
 import classes from './ThemeSelector.module.css'
 
 import SelectorItem from './SelectorItem/SelectorItem'
@@ -9,12 +9,8 @@ class ThemeSelector extends Component {
         this.props.getPossibleQuizzes()
     }
 
-    render() {
-        if (!this.props.quizzes) {
-            return <div>asd</div>
-        }
+    showQuizzes () {
         return (
-            <div className={`row justify-content-md-center ${classes.ThemeSelector}`}>
             <div className="card-group">
                 {this.props.quizzes.map(quiz => 
                 (<SelectorItem 
@@ -26,6 +22,22 @@ class ThemeSelector extends Component {
                 />
                 ))}
             </div>
+        )
+    }
+
+    render() {
+        if (!this.props.quizzes) {
+            return <div>Loading...</div>
+        }
+        return (
+            <div className={`row justify-content-md-center ${classes.ThemeSelector}`}>
+                {this.showQuizzes()}
+            { this.props.selectedQuiz ?
+                <div className="row justify-content-md-center">
+                    <div className="column">
+                        <button onClick={() => this.props.startQuiz() }>Start</button>
+                    </div>
+                </div>: null}
             </div>
         )
     }
@@ -33,9 +45,9 @@ class ThemeSelector extends Component {
 
 const mapStateToProps = (state) => ({
     selectedQuiz: state.quiz.selectedQuiz,
-    quizzes: state.quiz.possibleQuizzes
+    quizzes: state.quiz.possibleQuizzes,
 })
 
 
 
-export default connect(mapStateToProps, { selectQuiz, getPossibleQuizzes})(ThemeSelector)
+export default connect(mapStateToProps, { selectQuiz, getPossibleQuizzes, startQuiz})(ThemeSelector)

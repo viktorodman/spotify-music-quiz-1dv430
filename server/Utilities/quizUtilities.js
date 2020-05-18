@@ -1,3 +1,6 @@
+'use strict'
+
+
 // DEAFAULT Quizess
 const quizess = [ 
     {

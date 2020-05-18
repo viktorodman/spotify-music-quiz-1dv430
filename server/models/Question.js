@@ -1,9 +1,9 @@
-/* 'use strict'
+'use strict'
 
 const mongoose = require('mongoose')
-const Alternative = require('./Alternative')
+const { Alternative } = require('./Alternative')
 
-const questionSchema = new mongoose.Schema({
+const Question = new mongoose.Schema({
   question_img: { type: String, required: true },
   question_number: { type: Number, required: true },
   question_title: { type: String, required: true },
@@ -15,10 +15,7 @@ const questionSchema = new mongoose.Schema({
   versionKey: false
 })
 
-const Question = mongoose.model('Question', questionSchema)
-
-module.exports = Question
+module.exports = { Question }
 
 
 
- */

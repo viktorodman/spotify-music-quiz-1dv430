@@ -8,6 +8,7 @@ import classes from './Quiz.module.css'
 
 import QuizQuestion from './QuizQuestion/QuizQuestion'
 import QuizAlts from './QuizAlts/QuizAlts'
+import QuizTimer from './QuizTimer/QuizTimer'
 
 
 export class Quiz extends Component {
@@ -16,34 +17,22 @@ export class Quiz extends Component {
         
     }
 
-   
-
-    changeQuestion () {
-        if (this.props.currentQuestionNumber === 7) {
-            this.props.showScore()
-        } else {
-            this.props.nextQuestion()
-        }
-    }
-
     render() {
-        const { currentQuestion, userToken } = this.props
-        if(currentQuestion && userToken) {
-            this.props.playSong(currentQuestion.question_track_url, this.props.deviceId)
+        const { currentQuestion } = this.props
+        if(currentQuestion ) {
+            /* this.props.playSong(currentQuestion.question_track_url, this.props.deviceId) */
             return (
                 <div className={`jumbotron ${classes.Quiz}`}>
-                    {this.props.shouldShowScore 
-                    ? <p>SCORE</p>
-                    :<div>
+                    <p>{this.props.currentQuestionNumber}</p>
                     <QuizQuestion 
                     questionImg={currentQuestion.question_img}
                     questionText={currentQuestion.question_title}
                     />
-                    <p>{this.props.currentQuestionNumber}</p>
+                    <QuizTimer />
                     <QuizAlts/>
-                    {this.props.selectedAnswer ? <button onClick={() => this.changeQuestion() }>Next Question</button>:null}
-                    </div>
-                    } 
+                    {this.props.selectedAnswer ? <button onClick={() => this.props.nextQuestion(this.props.currentQuestionNumber) }>Next Question</button>:null}
+                    
+                    
                 </div>
             )
         }
@@ -57,8 +46,8 @@ export class Quiz extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    currentQuestionNumber: state.quiz.currentQuestionNumber,
     currentQuestion: state.quiz.currentQuestion,
+    currentQuestionNumber: state.quiz.currentQuestionNumber,
     selectedQuiz: state.quiz.selectedQuiz,
     playerReady: state.player.playerReady,
     selectedAnswer: state.quiz.selectedAnswer,

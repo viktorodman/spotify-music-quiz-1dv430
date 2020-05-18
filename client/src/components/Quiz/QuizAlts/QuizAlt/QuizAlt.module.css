@@ -1,11 +1,19 @@
 
 .QuizAlt {
-    max-width: 200px;
+    max-width: 400px;
     padding-bottom: 15px;
+    transition: .40s, transform .40s ease;
+    -moz-transition: .40s, transform .40s ease;
+    -webkit-transition: .40s, transform .40s ease;
 }
 
 .QuizAlt img{
-    height: 150px;
+    height: 250px;
+}
+
+.QuizAlt h5 {
+    font-size: 30px;
+    color: #e12c2b;
 }
 
 .QuizAlt img:hover {
@@ -20,11 +28,6 @@
     cursor: pointer;
 }
 
-.QuizAlt {
-    transition: .40s, transform .40s ease;
-    -moz-transition: .40s, transform .40s ease;
-    -webkit-transition: .40s, transform .40s ease;
-}
   
 .QuizAlt:hover {
     -ms-transform: scale(1.06); 

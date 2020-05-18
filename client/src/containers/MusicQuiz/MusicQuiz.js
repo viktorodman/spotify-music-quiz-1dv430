@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { startQuiz } from '../../actions/quizActions'
+
 
 import { getToken } from '../../actions/authActions'
 
@@ -13,27 +13,27 @@ import classes from './MusicQuiz.module.css'
 class MusicQuiz extends Component {
 
     async componentDidMount() {
-        const token = await this.props.getToken()
-        console.log(await token)
+        await this.props.getToken()
+    }
+
+    currentQuizStatus () {
+        switch (this.props.status) {
+            case 'Selecting Quiz':
+                return <ThemeSelector />
+            case 'Quiz Started':
+                return <Quiz />
+            case 'Showing Score':
+                return <p>SCORE: {this.props.score}</p>
+            default:
+                return null
+        }
     }
 
     render() {
         return (
             <div className={`col ${classes.MusicQuiz}`}>
                 <SpotifyPlayer/>
-                {this.props.quizStarted 
-                    ? <Quiz/>
-                    :
-                    <div>
-                        <ThemeSelector />
-                        { this.props.selectedQuiz ?
-                        <div className="row justify-content-md-center">
-                            <div className="column">
-                                <button onClick={() => this.props.startQuiz() }>Start</button>
-                            </div>
-                        </div>: null}
-                    </div>
-                }
+                {this.currentQuizStatus()}
             </div>
         )
     }
@@ -41,7 +41,9 @@ class MusicQuiz extends Component {
 
 const mapStateToProps = (state) => ({
     selectedQuiz: state.quiz.selectedQuiz,
-    quizStarted: state.quiz.quizStarted
+    quizStarted: state.quiz.quizStarted,
+    status: state.quiz.quizStatus,
+    score: state.quiz.score
 })
 
-export default connect(mapStateToProps, { startQuiz, getToken })(MusicQuiz)
+export default connect(mapStateToProps, { getToken })(MusicQuiz)

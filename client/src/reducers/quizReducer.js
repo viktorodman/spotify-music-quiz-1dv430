@@ -1,16 +1,17 @@
-import { QUIZ_SELECTED, FETCH_POSSIBLE_QUIZZES, QUIZ_STARTED, FETCH_QUESITONS, NEXT_QUESTION, FETCH_ANSWER, SHOW_SCORE} from '../actions/types'
+import { QUIZ_SELECTED, FETCH_POSSIBLE_QUIZZES, QUIZ_STARTED, FETCH_QUESITONS, NEXT_QUESTION, FETCH_ANSWER, SHOW_SCORE, QUIZ_STATUS, RESET_QUIZ} from '../actions/types'
 
 const initialState = {
+    quizStatus: 'Showing Score',
     quizIsSelected: null,
     selectedQuiz: null,
     possibleQuizzes: null,
     quizStarted: null,
     questions: null,
-    currentQuestionNumber: null,
+    currentQuestionNumber: 0,
     currentQuestion: null,
     selectedAnswer: null,
     correctAnswer: null,
-    shouldShowScore: null
+    score: 0
 }
 
 
@@ -22,9 +23,21 @@ export default (state = initialState, { type, payload }) => {
     case FETCH_POSSIBLE_QUIZZES:
         return { ...state,  possibleQuizzes: payload}
     case QUIZ_STARTED:
-        return { ...state, quizStarted: true, }
+        return { ...state, quizStatus: 'Quiz Started' }
+    case QUIZ_STATUS:
+        return { ...state, quizStatus: payload}
     case SHOW_SCORE:
-        return { ...state, shouldShowScore: true}
+        return { 
+            ...state, 
+            quizStatus: 'Showing Score',
+            quizIsSelected: null,
+            selectedQuiz: null,
+            quizStarted: null,
+            questions: null,
+            currentQuestion: null,
+            selectedAnswer: null,
+            correctAnswer: null
+        }
     case FETCH_QUESITONS:
         const question = {...payload[0]}
         return { 
@@ -48,7 +61,8 @@ export default (state = initialState, { type, payload }) => {
         return {
             ...state,
             selectedAnswer: payload.alt_number,
-            correctAnswer: payload.correct_alt_number
+            correctAnswer: payload.question_correct_alt,
+            score: state.score += payload.score
         }
     default:
         return state

@@ -8,11 +8,22 @@ let redirect_uri = process.env.REDIRECT_URI || 'http://localhost:5000/api/callba
 
 
 authController.login = async (req, res) => {
-    res.redirect('https://accounts.spotify.com/authorize' + 
+    try {
+        if (req.session.user) {
+            throw new Error('Cant login if a user is already logged in')
+        }
+
+        res.redirect('https://accounts.spotify.com/authorize' + 
         '?response_type=code' + 
         '&client_id=' + process.env.SPOTIFY_CLIENT_ID +
         (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
         '&redirect_uri=' + encodeURIComponent(redirect_uri))
+    } catch (error) {
+        res.status(403).json({
+            status: '403',
+            message: error.message
+        })
+    }
 }
 
 
@@ -33,7 +44,7 @@ authController.logout = (req, res) => {
         req.session.destroy()
         res.json('User is now logged out')
     } catch (error) {
-        res.json(error.message)
+        res.json({error: '403', message: error.message})
     }
     
 }

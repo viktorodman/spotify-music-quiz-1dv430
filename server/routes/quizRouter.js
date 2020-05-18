@@ -5,9 +5,11 @@ const router = express.Router()
 
 const controller = require('../controllers/quizController')
 
-router.post('/createQuiz', controller.authorize, controller.createQuiz)
-router.get('/getQuizzes', controller.authorize, controller.getQuizzes)
-router.post('/answer', controller.authorize, controller.checkAnswer)
+const { authorize } = require('../Utilities/authUtilities')
+
+router.post('/createQuiz', authorize, controller.createQuiz)
+router.get('/getQuizzes', authorize, controller.getQuizzes)
+router.post('/answer', authorize, controller.checkAnswer)
 
 
 module.exports = router

@@ -28,7 +28,6 @@ quizController.createQuiz = async (req, res) => {
 
         res.json(clientData)
     } catch (error) {
-        console.log(error)
         res.json(error)
     }
 }
@@ -58,24 +57,22 @@ quizController.checkAnswer = async (req, res) => {
 
         question.question_correct_alt === alt_number ? response = 'Correct' : response = 'Wrong Answer'
 
-        res.json(question.question_correct_alt)
+        /* res.json(question.question_correct_alt) */
+        res.status(200).json({
+            status: '200',
+            message: response,
+            question_correct_alt: question.question_correct_alt
+        })
     } catch (error) {
         res.json(error)
     }
 }
 
 
-quizController.authorize = (req, res, next) => {
-    if (!req.session.user) {
-      return next(res.status(403).json({
-          status: '403',
-          message: 'User not Authorized'
-      }))
-    }
-    next()
-}
 
-const saveQuestions = async (questions, id) => {
+
+const saveQuestions = async (questions, id) => {    
+
     const user = await User.updateOne({id}, {
         user_questions: questions
     })

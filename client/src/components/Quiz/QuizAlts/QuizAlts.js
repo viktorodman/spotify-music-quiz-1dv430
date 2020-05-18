@@ -13,7 +13,8 @@ export class QuizAlts extends Component {
     render() {
     if(this.props.currentQuestion) {
         return (
-            <div className={`row row-cols-2 justify-content-md-center`}>
+            <div className={`row row-cols-2 justify-content-md-center ${classes.QuizAlts}`}>
+                <p>{this.props.currentQuestionNumber}</p>
                 {this.props.currentQuestion.question_alternatives.map(alternative => {
                     let correctAnswer = null
                     if (this.props.correctAnswer !== null) {

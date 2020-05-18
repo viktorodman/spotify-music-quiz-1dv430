@@ -1,4 +1,5 @@
-import { QUIZ_SELECTED, FETCH_POSSIBLE_QUIZZES, QUIZ_STARTED, FETCH_QUESITONS, NEXT_QUESTION, FETCH_ANSWER, SHOW_SCORE } from './types'
+import { QUIZ_SELECTED, FETCH_POSSIBLE_QUIZZES, QUIZ_STARTED, FETCH_QUESITONS, NEXT_QUESTION, FETCH_ANSWER, SHOW_SCORE, QUIZ_STATUS } from './types'
+
 
 
 export const selectQuiz = (selectedQuiz) => (dispatch) => {
@@ -7,12 +8,20 @@ export const selectQuiz = (selectedQuiz) => (dispatch) => {
 }
 
 
-export const nextQuestion = () => async (dispatch) => {
-    dispatch({ type: NEXT_QUESTION })
+export const nextQuestion = (prevNumber) => (dispatch, getState) => {
+
+    if (prevNumber + 1 > 7) {
+        console.log("wtf")
+        dispatch({ type: SHOW_SCORE })
+    } else {
+        dispatch({ type: NEXT_QUESTION })
+    }
+
+    
 }
 
-export const showScore = () => async (dispatch) => {
-    dispatch({ type: SHOW_SCORE })
+export const showScore = () =>  (dispatch) => {
+    return { type: SHOW_SCORE }
 }
 
 export const sendAnswer = (question_number, alt_number) => async (dispatch) => {
@@ -25,9 +34,11 @@ export const sendAnswer = (question_number, alt_number) => async (dispatch) => {
         }
     })
 
-    const correct_alt_number = await response.json()
+    const { message, question_correct_alt } = await response.json()
 
-    dispatch({ type: FETCH_ANSWER, payload: {alt_number, correct_alt_number} })
+    const score = message === 'Correct' ? 1: 0
+
+    dispatch({ type: FETCH_ANSWER, payload: { question_correct_alt, alt_number, score } })
 }
 
 export const getPossibleQuizzes = () => async (dispatch) => {

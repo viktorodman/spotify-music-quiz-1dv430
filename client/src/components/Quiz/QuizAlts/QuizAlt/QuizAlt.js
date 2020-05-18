@@ -13,10 +13,10 @@ export const QuizAlt = (props) => {
         <div className={`col-3 ${classes.QuizAlt}`}>
             <input disabled={props.correctAlternative !== null} type="radio" name="alt" id={props.altNumber} onClick={() => props.click(props.altNumber)}/>
             <label htmlFor={props.altNumber}>
-            <div className={`card bg-transparent ${altClasses} ${classes.borderThick}`}>
+            <div className={`card bg-transparent shadow ${altClasses} ${classes.borderThick}`}>
                 <div className={classes.cardImgWrap}><img src={props.altImg} className="card-img" alt="Quiz img"/></div>
             </div>
-            <h5 className="text-center text-white">{props.altTitle}</h5>
+            <h5 className="text-center">{props.altTitle}</h5>
             </label>
             <input type="hidden" name={props.altNumber}/>
         </div>
