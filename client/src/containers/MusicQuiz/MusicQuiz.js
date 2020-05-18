@@ -7,6 +7,7 @@ import { getToken } from '../../actions/authActions'
 import ThemeSelector from '../../components/ThemeSelector/ThemeSelector'
 import Quiz from '../../components/Quiz/Quiz'
 import SpotifyPlayer from '../../components/SpotifyPlayer/SpotifyPlayer'
+import ScoreDisplay from '../../components/ScoreDisplay/ScoreDisplay'
 import classes from './MusicQuiz.module.css'
 
 
@@ -23,7 +24,7 @@ class MusicQuiz extends Component {
             case 'Quiz Started':
                 return <Quiz />
             case 'Showing Score':
-                return <p>SCORE: {this.props.score}</p>
+                return <ScoreDisplay />
             default:
                 return null
         }
@@ -43,7 +44,6 @@ const mapStateToProps = (state) => ({
     selectedQuiz: state.quiz.selectedQuiz,
     quizStarted: state.quiz.quizStarted,
     status: state.quiz.quizStatus,
-    score: state.quiz.score
 })
 
 export default connect(mapStateToProps, { getToken })(MusicQuiz)
