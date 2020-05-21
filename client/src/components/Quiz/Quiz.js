@@ -2,19 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { getQuestions, nextQuestion } from '../../actions/questionActions'
-
 import { startTimer, resetTimer, stopTimer } from '../../actions/timerActions'
-
 import { stopSong } from '../../actions/playerActions'
-
 import { sendAnswer} from '../../actions/questionActions'
-
-import classes from './Quiz.module.css'
 
 import QuizQuestion from './QuizQuestion/QuizQuestion'
 import QuizTimer from './QuizTimer/QuizTimer'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 import NextButton from './NextButton/NextButton'
+
+import classes from './Quiz.module.css'
 
 
 export class Quiz extends Component {
@@ -23,7 +20,10 @@ export class Quiz extends Component {
     }
 
     handleQuestionChange () {
-        this.props.nextQuestion(this.props.questionNumber)
+        const {questions, questionIndex} = this.props
+        const question_number = questions[questionIndex].question_number
+
+        this.props.nextQuestion(question_number)
         this.props.resetTimer()
     }
 
@@ -43,7 +43,7 @@ export class Quiz extends Component {
 
 
     render() {
-        const { questionsReady, correctAnswer} = this.props
+        const { questionsReady, correctAnswer } = this.props
 
         if(questionsReady) {
             if (!correctAnswer){

@@ -1,15 +1,14 @@
-.AnswerStatus {
+.QuestionTitle {
+    font-size: 40px;
+    /* color: #878787; */
+    color: #878787;
     text-transform: uppercase;
     text-shadow: #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px,
              #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px;
-    padding: 0px;
-    margin: 0px;
 }
 
-.wrongAnswer {
+.questionNumber {
+    padding-top: 15px;
+    font-size: 20px;
     color: #e12c2b;
-}
-
-.correctAnswer {
-    color:#7bed55;
 }

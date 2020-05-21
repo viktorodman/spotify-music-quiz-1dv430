@@ -14,7 +14,7 @@ export class ScoreDisplay extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    score: state.quiz.score
+    score: state.questions.score
 })
 
 export default connect( mapStateToProps )(ScoreDisplay)

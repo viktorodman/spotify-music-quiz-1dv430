@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { playSong } from '../../../actions/playerActions'
 import QuizAlts from '../QuizAlts/QuizAlts'
 import AnswerStatus from '../AnswerStatus/AnswerStatus'
+import QuestionTitle from '../QuestionTitle/QuestionTitle'
 import classes from './QuizQuestion.module.css'
 
 
@@ -17,16 +18,18 @@ export class QuizQuestion extends Component {
         
         return (
             <div className="row justify-content-center">
-            <div className="col-12">
-                <h5 className={`text-center ${classes.QuestionText}`}>{question.question_title}</h5>
-            </div>
-            <AnswerStatus message={answerMessage}/>
-            <QuizAlts 
-                alternatives={question.question_alternatives}
-                onAltClick={(alt_number) => this.props.onAnswer(question.question_number, alt_number)}
-                selectedAlt={selectedAnswer}
-                correctAlt={correctAnswer}
-            />
+                <QuestionTitle 
+                    title={question.question_title}
+                    questionNumber={question.question_number}
+                    numberOfQuestions={questions.length}
+                />
+                <AnswerStatus message={answerMessage}/>
+                <QuizAlts 
+                    alternatives={question.question_alternatives}
+                    onAltClick={(alt_number) => this.props.onAnswer(question.question_number, alt_number)}
+                    selectedAlt={selectedAnswer}
+                    correctAlt={correctAnswer}
+                />
             </div>
         )
     }
