@@ -1,65 +1,90 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { getQuestions, nextQuestion, sendAnswer, showScore } from '../../actions/quizActions'
-import { playSong } from '../../actions/playerActions'
+import { getQuestions, nextQuestion } from '../../actions/questionActions'
+
+import { startTimer, resetTimer, stopTimer } from '../../actions/timerActions'
+
+import { stopSong } from '../../actions/playerActions'
+
+import { sendAnswer} from '../../actions/questionActions'
 
 import classes from './Quiz.module.css'
 
 import QuizQuestion from './QuizQuestion/QuizQuestion'
-import QuizAlts from './QuizAlts/QuizAlts'
 import QuizTimer from './QuizTimer/QuizTimer'
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import NextButton from './NextButton/NextButton'
 
 
 export class Quiz extends Component {
     async componentDidMount() {
         await this.props.getQuestions(this.props.selectedQuiz)
-        
     }
 
+    handleQuestionChange () {
+        this.props.nextQuestion(this.props.questionNumber)
+        this.props.resetTimer()
+    }
+
+    async handleTimesUp () {
+        const {questions, questionIndex} = this.props
+
+        const question_number = questions[questionIndex].question_number
+        await this.props.sendAnswer(question_number, 5)
+        await this.props.stopSong(this.props.deviceId)
+    }
+
+    async handleAnswerSelected(question_number, alt_number) {
+        this.props.stopTimer()
+        await this.props.sendAnswer(question_number, alt_number)
+        await this.props.stopSong(this.props.deviceId)
+    }
+
+
     render() {
-        const { currentQuestion } = this.props
-        if(currentQuestion ) {
-            /* this.props.playSong(currentQuestion.question_track_url, this.props.deviceId) */
+        const { questionsReady, correctAnswer} = this.props
+
+        if(questionsReady) {
+            if (!correctAnswer){
+                this.props.startTimer()
+            }
             return (
                 <div className={`jumbotron ${classes.Quiz}`}>
-                    <p>{this.props.currentQuestionNumber}</p>
-                    <QuizQuestion 
-                    questionImg={currentQuestion.question_img}
-                    questionText={currentQuestion.question_title}
+                    <QuizTimer 
+                        onTimesUp={() => this.handleTimesUp()}
                     />
-                    <QuizTimer />
-                    <QuizAlts/>
-                    {this.props.selectedAnswer ? <button onClick={() => this.props.nextQuestion(this.props.currentQuestionNumber) }>Next Question</button>:null}
-                    
-                    
+                    <QuizQuestion 
+                        onAnswer={(question_number, alt_number) => this.handleAnswerSelected(question_number, alt_number)}
+                    />
+                    <NextButton 
+                        shouldDisplay={this.props.correctAnswer !== null}
+                        click={() => this.handleQuestionChange()}
+                    />
                 </div>
             )
         }
 
-        return (
-            <div className="ui two column centered grid">
-               <p>Loading</p> 
-            </div>
-        )
+        return <LoadingSpinner />
     }
 }
 
 const mapStateToProps = (state) => ({
-    currentQuestion: state.quiz.currentQuestion,
-    currentQuestionNumber: state.quiz.currentQuestionNumber,
     selectedQuiz: state.quiz.selectedQuiz,
     playerReady: state.player.playerReady,
-    selectedAnswer: state.quiz.selectedAnswer,
-    shouldShowScore: state.quiz.shouldShowScore,
-    userToken: state.auth.userToken,
-    deviceId: state.player.deviceId
+    questionsReady: state.questions.questionsReady,
+    deviceId: state.player.deviceId,
+    correctAnswer: state.questions.correctAnswer,
+    questions: state.questions.questions,
+    questionIndex: state.questions.currentQuestionIndex
 })
 
 export default connect(mapStateToProps, {
     getQuestions,
     nextQuestion,
-    sendAnswer,
-    showScore,
-    playSong
+    startTimer,
+    resetTimer,
+    stopTimer,
+    stopSong,
+    sendAnswer
 })(Quiz)

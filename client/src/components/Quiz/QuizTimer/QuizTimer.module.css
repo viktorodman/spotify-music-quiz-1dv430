@@ -6,3 +6,11 @@
 .bar {
     background-color: #e12c2b;
 }
+
+
+.timer {
+    font-size: 30px;
+    color: #e12c2b;
+    text-shadow: #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px,
+             #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px;
+}

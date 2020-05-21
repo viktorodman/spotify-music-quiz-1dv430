@@ -1,19 +1,19 @@
-import { TIMER_STATUS, DECREMENT_TIMER } from './types'
+import { START_TIMER, STOP_TIMER, RESET_TIMER, TIME_IS_UP } from './types'
 
-export const setTimerStatus = (status) => async (dispatch) => {
-    dispatch({ type: TIMER_STATUS, payload: status})
-}
 
 export const startTimer = () => (dispatch, getState) => {
-    let timer = null
-    clearInterval(timer)
-    timer = setInterval(() => {
-        dispatch(tick())
-        const { currentTime } = getState()
-        if (currentTime <= 1) {
-            clearInterval(timer)
-        }
-    }, 1000 / 20)
+    dispatch({ type: START_TIMER})
 }
 
-const tick = () => ({type: DECREMENT_TIMER})
+export const stopTimer = () => (dispatch) => {
+    dispatch({ type: STOP_TIMER })
+}
+
+export const resetTimer = () => (dispatch) => {
+    dispatch({ type: RESET_TIMER })
+}
+
+export const timesUp = () => (dispatch) => {
+    dispatch({ type: TIME_IS_UP })
+}
+

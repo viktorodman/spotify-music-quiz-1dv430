@@ -1,31 +1,41 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
+import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import { startTimer } from '../../../actions/timerActions'
+
 
 
 import classes from './QuizTimer.module.css'
 
 export class QuizTimer extends Component {
-    componentDidMount() {
-        this.props.startTimer()
-    }
 
     render() {
-        const {time, maxTime} =this.props
-        const barWidth = 100 * time / maxTime
         return (
-            <div className={`progress ${classes.QuizTimer}`}>
-                <div className={`progress-bar ${classes.bar}`} style={{width: `${barWidth}%`}} role="progressbar" aria-valuenow={93} aria-valuemin="0" aria-valuemax="100"></div>
+            <div className={`row justify-content-md-center ${classes.QuizAlts}`}>
+                <div className={classes.timer}>
+                 <CountdownCircleTimer
+                isPlaying={this.props.status === 'Timer_Started'}
+                key={this.props.timerKey}
+                duration={15}
+                colors={[['#e12c2b']]}
+                onComplete={() => {
+                   this.props.onTimesUp()
+                    /* return [true] */
+                  }}
+                >
+                    {({ remainingTime }) => remainingTime}
+                </CountdownCircleTimer>
+                </div>
             </div>
         )
     }
 }
-
-const mapStateToProps = (state) => ({
-    time: state.timer.currentTime,
-    maxTime: state.timer.startTime
-})
-
-
+    
+    const mapStateToProps = (state) => ({
+        status: state.timer.status,
+        timerKey: state.timer.timerKey
+    })
+    
+    
 export default connect(mapStateToProps, { startTimer })(QuizTimer)
+    

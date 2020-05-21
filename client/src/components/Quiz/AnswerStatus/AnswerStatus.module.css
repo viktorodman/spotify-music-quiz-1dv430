@@ -1,0 +1,16 @@
+.AnswerStatus {
+    text-transform: uppercase;
+    text-shadow: #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px,
+             #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px;
+    height: 80px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.wrongAnswer {
+    color: #e12c2b;
+}
+
+.correctAnswer {
+    color:#7bed55;
+}

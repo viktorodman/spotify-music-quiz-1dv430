@@ -2,18 +2,24 @@
 .QuizAlt {
     max-width: 260px;
     padding-bottom: 15px;
-    transition: .40s, transform .40s ease;
+   /*  transition: .40s, transform .40s ease;
     -moz-transition: .40s, transform .40s ease;
-    -webkit-transition: .40s, transform .40s ease;
+    -webkit-transition: .40s, transform .40s ease; */
+    
 }
 
 .QuizAlt img{
-    height: 250px;
+    height: 230px;
+    -webkit-box-shadow: -2px -3px 20px 2px rgba(0,0,0,0.75);
+-moz-box-shadow: -2px -3px 20px 2px rgba(0,0,0,0.75);
+box-shadow: -2px -3px 20px 2px rgba(0,0,0,0.75);
 }
 
 .QuizAlt h5 {
     font-size: 30px;
     color: #e12c2b;
+    text-shadow: #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px,
+             #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px;
 }
 
 .QuizAlt img:hover {
@@ -30,10 +36,11 @@
 
   
 .QuizAlt:hover {
-    -ms-transform: scale(1.06); 
+    /* -ms-transform: scale(1.06); 
     -webkit-transform: scale(1.06);
-    transform: scale(1.06);
-    filter: drop-shadow(0 0 0.8rem #3cc8d093);
+    transform: scale(1.06); */
+    /* filter: drop-shadow(0 0 0.8rem #3cc8d093); */
+    /* border-bottom: black; */
 }
 
 

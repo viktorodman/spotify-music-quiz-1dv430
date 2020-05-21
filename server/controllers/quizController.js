@@ -55,14 +55,26 @@ quizController.checkAnswer = async (req, res) => {
         
         let response = ''
 
-        question.question_correct_alt === alt_number ? response = 'Correct' : response = 'Wrong Answer'
+        
+
+        if (alt_number === 5) {
+            res.status(200).json({
+                status: '200',
+                message: 'Out of time',
+                question_correct_alt: question.question_correct_alt
+            })
+        } else {
+            question.question_correct_alt === alt_number ? response = 'Correct' : response = 'Wrong Answer'
+
+            res.status(200).json({
+                status: '200',
+                message: response,
+                question_correct_alt: question.question_correct_alt
+            })
+        }
 
         /* res.json(question.question_correct_alt) */
-        res.status(200).json({
-            status: '200',
-            message: response,
-            question_correct_alt: question.question_correct_alt
-        })
+       
     } catch (error) {
         res.json(error)
     }

@@ -8,6 +8,8 @@
     font-size: 40px;
     color: #e12c2b;
     text-transform: uppercase;
+    text-shadow: #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px,
+             #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px;
 }
 
 .QuizQuestion img {

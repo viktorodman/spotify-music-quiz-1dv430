@@ -1,21 +1,23 @@
-import { TIMER_STATUS, DECREMENT_TIMER } from '../actions/types'
+import { START_TIMER, STOP_TIMER, RESET_TIMER, TIME_IS_UP } from '../actions/types'
 
 
 const initialState = {
     status: null,
-    startTime: 15,
-    currentTime: 15,
-    
+    timeIsUp: null,
+    timerKey: 0
 }
 
 export default (state = initialState, { type, payload }) => {
     switch (type) {
 
-    case TIMER_STATUS:
-        return { ...state, status: payload }
-    case DECREMENT_TIMER:
-        const time = state.currentTime - (1 / 20)
-        return { ...state, currentTime: time }
+    case STOP_TIMER:
+        return { ...state, status: 'Timer_Stoped' }
+    case START_TIMER:
+        return { ...state, status: 'Timer_Started' }
+    case RESET_TIMER:
+        return { ...state, timerKey: state.timerKey + 1 }
+    case TIME_IS_UP:
+        return { ...state, timeIsUp: true }
     default:
         return state
     }
