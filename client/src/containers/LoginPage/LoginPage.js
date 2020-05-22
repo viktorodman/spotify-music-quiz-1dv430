@@ -6,8 +6,8 @@ class LoginPage extends Component {
             <div>
                 <div className="row justify-content-center">
                     <div className="col-4">
-                        {/* <p className="text-center"><a href='/api/auth/login'>Login with Spotify</a></p> */}
-                        <p className="text-center"><a href='http://localhost:5000/api/auth/login'>Login with Spotify</a></p>
+                        <p className="text-center"><a href='/api/auth/login'>Login with Spotify</a></p>
+                        {/* <p className="text-center"><a href='http://localhost:5000/api/auth/login'>Login with Spotify</a></p> */}
                     </div>
                 </div>
                 <div className="row justify-content-center">
