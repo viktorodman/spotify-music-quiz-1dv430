@@ -18,7 +18,7 @@ class MusicQuiz extends Component {
     }
 
     currentQuizStatus () {
-        switch (this.props.status) {
+        switch (this.props.quizStatus) {
             case 'Selecting Quiz':
                 return <ThemeSelector />
             case 'Quiz Started':
@@ -43,7 +43,7 @@ class MusicQuiz extends Component {
 const mapStateToProps = (state) => ({
     selectedQuiz: state.quiz.selectedQuiz,
     quizStarted: state.quiz.quizStarted,
-    status: state.quiz.quizStatus,
+    quizStatus: state.quiz.quizStatus,
 })
 
 export default connect(mapStateToProps, { getToken })(MusicQuiz)

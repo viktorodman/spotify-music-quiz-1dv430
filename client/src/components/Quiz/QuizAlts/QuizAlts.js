@@ -18,7 +18,7 @@ export const QuizAlts = (props) => {
             click={(alt_number) => props.onAltClick(alt_number)}
             altNumber={alternative.alt_number}
             correctAlternative={isCorrectAnswer}
-            key={alternative.alt_img}
+            key={alternative.id}
             />
         )     
     })

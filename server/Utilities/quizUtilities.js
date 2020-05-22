@@ -20,6 +20,20 @@ const quizess = [
     }
 ]
 
+const getUniqueTracks = (tracks) => {
+    let uniqueTracks = [];
+
+    tracks.forEach(track => {
+        let i = uniqueTracks.findIndex(uniqueTrack => uniqueTrack.artists[0].id === track.artists[0].id)
+        if(i <= -1) {
+            uniqueTracks.push(track)
+        }
+    })
+
+    return uniqueTracks
+} 
+
+
 const shuffleTracks = (tracks) => {
     const tracksCopy = [...tracks]
     let currentIndex = tracksCopy.length
@@ -44,4 +58,4 @@ const getRandomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min
   }
 
-module.exports = { quizess, shuffleTracks, getRandomNumber }
+module.exports = { quizess, shuffleTracks, getRandomNumber, getUniqueTracks }

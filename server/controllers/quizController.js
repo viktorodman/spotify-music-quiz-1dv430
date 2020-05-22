@@ -5,7 +5,7 @@ const quizController = {}
 const User = require('../models/User')
 
 const { getUserTracks, getTracksFromPlaylist, getArtistImage } = require('../Utilities/spotifyRequests')
-const { quizess, shuffleTracks, getRandomNumber } = require('../Utilities/quizUtilities')
+const { quizess, shuffleTracks, getRandomNumber, getUniqueTracks } = require('../Utilities/quizUtilities')
 
 quizController.createQuiz = async (req, res) => {
     try {
@@ -21,6 +21,11 @@ quizController.createQuiz = async (req, res) => {
             tracks = await getTracksFromPlaylist(access_token, playlist_id)
         }
         
+        /* const tracks = await getUserTracks(access_token, id)
+
+        const filteredTracks = await filterTracks(tracks.flat())
+
+        res.json(filteredTracks) */
         
         const filteredTracks = await filterTracks(tracks.flat())
         const questions = await createQuestions(filteredTracks, access_token)
@@ -97,8 +102,12 @@ const saveQuestions = async (questions, id) => {
 }
 
 
-const filterTracks = async (tracks) => {
-    return tracks.filter(track => track.album.release_date)
+const filterTracks = (tracks) => {
+    const uniqueTracks = getUniqueTracks(tracks)
+
+    return uniqueTracks.filter(track => {
+        return track.uri
+    })
 }
 
 
@@ -149,7 +158,8 @@ const createArtistAlternative  = async (alt_number, trackObject, access_token) =
     return {
         alt_number,
         alt_img: img,
-        alt_title: trackObject.artists[0].name
+        alt_title: trackObject.artists[0].name,
+        id: trackObject.id
     }
 }
 
@@ -157,7 +167,8 @@ const createSongTitleAlternative = (alt_number, trackObject) => {
     return {
         alt_number,
         alt_img: trackObject.album.images[0].url,
-        alt_title: trackObject.name
+        alt_title: trackObject.name,
+        id: trackObject.id
     }
 }
 
