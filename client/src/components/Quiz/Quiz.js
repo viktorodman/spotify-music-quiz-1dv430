@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { getQuestions, nextQuestion } from '../../actions/questionActions'
+import { getQuestions, nextQuestion, sendAnswer } from '../../actions/questionActions'
 import { startTimer, resetTimer, stopTimer } from '../../actions/timerActions'
 import { stopSong } from '../../actions/playerActions'
-import { sendAnswer} from '../../actions/questionActions'
+import { showScore } from '../../actions/quizActions'
+import { addScore } from '../../actions/highScoreActions'
 
 import QuizQuestion from './QuizQuestion/QuizQuestion'
 import QuizTimer from './QuizTimer/QuizTimer'
@@ -19,12 +20,16 @@ export class Quiz extends Component {
         await this.props.getQuestions(this.props.selectedQuiz)
     }
 
-    handleQuestionChange () {
-        const {questions, questionIndex} = this.props
-        const question_number = questions[questionIndex].question_number
+    async handleQuestionChange () {
+        const {questions, questionIndex, score, quizTitle} = this.props
 
-        this.props.nextQuestion(question_number)
-        this.props.resetTimer()
+        if (questions[questionIndex].question_number >= questions.length) {
+            await this.props.addScore(quizTitle, score, questions.length)
+            this.props.showScore()
+        } else {
+            this.props.nextQuestion()
+            this.props.resetTimer()
+        }
     }
 
     async handleTimesUp () {
@@ -60,6 +65,7 @@ export class Quiz extends Component {
                     <NextButton 
                         shouldDisplay={this.props.correctAnswer !== null}
                         click={() => this.handleQuestionChange()}
+                        buttonText={this.props.questions[this.props.questionIndex].question_number >= this.props.questions.length ? 'Show results': 'Next question'}
                     />
                 </div>
             )
@@ -76,7 +82,9 @@ const mapStateToProps = (state) => ({
     deviceId: state.player.deviceId,
     correctAnswer: state.questions.correctAnswer,
     questions: state.questions.questions,
-    questionIndex: state.questions.currentQuestionIndex
+    questionIndex: state.questions.currentQuestionIndex,
+    score: state.questions.score,
+    quizTitle: state.quiz.selectedQuizTitle
 })
 
 export default connect(mapStateToProps, {
@@ -86,5 +94,7 @@ export default connect(mapStateToProps, {
     resetTimer,
     stopTimer,
     stopSong,
-    sendAnswer
+    sendAnswer,
+    showScore,
+    addScore
 })(Quiz)

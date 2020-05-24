@@ -1,20 +1,20 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 
-export class ScoreDisplay extends Component {
-    render() {
-        return (
-            <div className="row justify-content-md-center">
-                <div className="col">
-                    <h5 className="text-center">SCORE: {this.props.score}</h5>
-                </div>
-            </div>
-        )
-    }
+import classes from './ScoreDisplay.module.css'
+
+export const ScoreDisplay = (props) => {
+    return (
+        <div className="row justify-content-md-center">
+        <div className="col-12">
+            <h5 className={`text-center ${classes.score}`}>SCORE: {props.score}</h5>
+        </div>
+        <div className="col-4 align-self-center">
+            <button onClick={() => props.quizSelectClick()} type="button" className="btn btn-outline-danger btn-lg btn-block">Go to quiz selection</button>
+            <button onClick={() => props.highScoreClick()} type="button" className="btn btn-outline-secondary btn-lg btn-block">Show high-score</button>
+        </div>
+        </div>
+    )
 }
 
-const mapStateToProps = (state) => ({
-    score: state.questions.score
-})
+export default ScoreDisplay
 
-export default connect( mapStateToProps )(ScoreDisplay)

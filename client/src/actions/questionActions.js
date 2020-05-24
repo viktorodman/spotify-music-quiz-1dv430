@@ -1,16 +1,8 @@
-import { FETCH_QUESITONS, NEXT_QUESTION, FETCH_ANSWER, SHOW_SCORE } from './types'
+import { FETCH_QUESITONS, NEXT_QUESTION, FETCH_ANSWER } from './types'
 
 
-export const nextQuestion = (questionNumber) => (dispatch, getState) => {
-    
-    console.log(questionNumber)
-    if (questionNumber >= 8) {
-        dispatch({ type: SHOW_SCORE })
-    } else {
-        dispatch({ type: NEXT_QUESTION })
-    }
-
-    
+export const nextQuestion = () => (dispatch) => {
+    dispatch({ type: NEXT_QUESTION })
 }
 
 

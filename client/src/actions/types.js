@@ -14,5 +14,9 @@ export const STOP_TIMER = 'STOP_TIMER'
 export const START_TIMER = 'START_TIMER'
 export const RESET_TIMER = 'RESET_TIMER'
 export const TIME_IS_UP = 'TIME_IS_UP'
+export const SELECTING_QUIZ = 'SELECTING_QUIZ'
+export const FETCH_HIGH_SCORES = 'FETCH_HIGH_SCORES'
+export const SHOW_HIGH_SCORE = 'SHOW_HIGH_SCORE'
+export const SELECT_HIGH_SCORE = 'SELECT_HIGH_SCORE'
 
 

@@ -3,11 +3,13 @@ import { connect } from 'react-redux'
 
 
 import { getToken } from '../../actions/authActions'
+import { showQuizSelection, showHighScore, getPossibleQuizzes } from '../../actions/quizActions'
 
 import ThemeSelector from '../../components/ThemeSelector/ThemeSelector'
 import Quiz from '../../components/Quiz/Quiz'
 import SpotifyPlayer from '../../components/SpotifyPlayer/SpotifyPlayer'
 import ScoreDisplay from '../../components/ScoreDisplay/ScoreDisplay'
+import HighScore from '../../components/HighScore/HighScore'
 import classes from './MusicQuiz.module.css'
 
 
@@ -15,6 +17,7 @@ class MusicQuiz extends Component {
 
     async componentDidMount() {
         await this.props.getToken()
+        await this.props.getPossibleQuizzes()
     }
 
     currentQuizStatus () {
@@ -24,7 +27,14 @@ class MusicQuiz extends Component {
             case 'Quiz Started':
                 return <Quiz />
             case 'Showing Score':
-                return <ScoreDisplay />
+                return <ScoreDisplay 
+                    quizSelectClick={() => this.props.showQuizSelection()}
+                    highScoreClick={() => this.props.showHighScore()}
+                    score={this.props.score}
+                    highScores={this.props.highScores}
+                />
+            case 'Showing HighScore':
+                return <HighScore />
             default:
                 return null
         }
@@ -44,6 +54,12 @@ const mapStateToProps = (state) => ({
     selectedQuiz: state.quiz.selectedQuiz,
     quizStarted: state.quiz.quizStarted,
     quizStatus: state.quiz.quizStatus,
+    score: state.questions.score
 })
 
-export default connect(mapStateToProps, { getToken })(MusicQuiz)
+export default connect(mapStateToProps, {
+    getToken,
+    showQuizSelection,
+    showHighScore,
+    getPossibleQuizzes 
+})(MusicQuiz)

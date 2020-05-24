@@ -64,6 +64,7 @@ app.use('/api/player', require('./routes/playerRouter'))
 app.use('/api/auth', require('./routes/authRouter'))
 app.use('/api/callback', require('./routes/callbackRouter'))
 app.use('/api/quiz', require('./routes/quizRouter'))
+app.use('/api/highscore', require('./routes/highScoreRouter'))
 
 // ======================================================//
 

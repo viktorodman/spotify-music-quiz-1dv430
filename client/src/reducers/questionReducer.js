@@ -7,7 +7,7 @@ const initialState = {
     selectedAnswer: null,
     correctAnswer: null,
     answerMessage: null,
-    score: null
+    score: 0
 }
 
 export default (state = initialState, { type, payload }) => {

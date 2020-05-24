@@ -10,7 +10,6 @@ const { quizess, shuffleTracks, getRandomNumber, getUniqueTracks } = require('..
 quizController.createQuiz = async (req, res) => {
     try {
         const { access_token, id } = await User.findOne({ id: req.session.user })
-
         const { playlist_id } = req.body
         
         let tracks = null
@@ -20,12 +19,6 @@ quizController.createQuiz = async (req, res) => {
         } else {
             tracks = await getTracksFromPlaylist(access_token, playlist_id)
         }
-        
-        /* const tracks = await getUserTracks(access_token, id)
-
-        const filteredTracks = await filterTracks(tracks.flat())
-
-        res.json(filteredTracks) */
         
         const filteredTracks = await filterTracks(tracks.flat())
         const questions = await createQuestions(filteredTracks, access_token)
