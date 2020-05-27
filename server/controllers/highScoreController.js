@@ -73,18 +73,27 @@ highScoreController.addHighScore = async (req, res) => {
     const { theme_id, numberOfCorrectAnswers, numberOfQuestions } = req.body
 
     const { id } = await User.findOne({ id: req.session.user })
-    const test = await HighScore.findOne({ user_id: id })
+    const highScores = await HighScore.findOne({ user_id: id })
 
 
-    const theme = test.themes.map(t => t)
+    const theme = highScores.themes.find(t => t.quizName === theme_id)
+
+    
+
+    const topScores = theme.topFiveScores.map(scores => scores.numberOfCorrectAnswers)
+    if (topScores.length < 5) {
+        await addScoreToHighScoreList(id, theme_id, numberOfQuestions, numberOfCorrectAnswers)
+    } else {
+        const minHighScore = theme.topFiveScores.find(t => t.numberOfCorrectAnswers === Math.min(...topScores))
+        if(minHighScore.numberOfCorrectAnswers < numberOfCorrectAnswers) {
+            await removeItemFromHighScore(id, theme_id, minHighScore._id)
+            await addScoreToHighScoreList(id, theme_id, numberOfQuestions, numberOfCorrectAnswers)
+        }
+    }
 
 
 
-    console.log(test)
-
-
-
-    const highScore = await HighScore.updateOne({ user_id: id, "themes.quizName": theme_id }, {
+   /*  const highScore = await HighScore.updateOne({ user_id: id, "themes.quizName": theme_id }, {
         $push: { "themes.$.topFiveScores": {numberOfQuestions, numberOfCorrectAnswers} }
     })
 
@@ -93,12 +102,36 @@ highScoreController.addHighScore = async (req, res) => {
       } else {
         console.log('Something went wrong when updating the snippet.')
       }
-    
+     */
     res.json(data)
     } catch (error) {
         console.log(error)
         res.json(error.message)
     }
+}
+
+const addScoreToHighScoreList = async (user_id, theme_id, numberOfQuestions, numberOfCorrectAnswers)  => {
+    const highScore = await HighScore.updateOne({ user_id, "themes.quizName": theme_id }, {
+        $push: { "themes.$.topFiveScores": {numberOfQuestions, numberOfCorrectAnswers} }
+    })
+
+    if (highScore.nModified === 1) {
+        console.log('HighScore was successfully Updated!')
+      } else {
+        console.log('Something went wrong when updating the HighScore.')
+      }
+}
+
+const removeItemFromHighScore = async (user_id, theme_id, score_id) => {
+    const highScore = await HighScore.updateOne({ user_id, "themes.quizName": theme_id }, {
+        $pull: { "themes.$.topFiveScores": { _id: score_id} }
+    })
+
+    if (highScore.nModified === 1) {
+        console.log('HighScore was successfully Updated!')
+      } else {
+        console.log('Something went wrong when updating the HighScore.')
+      }
 }
 
 const createNewHighScoreList = async (user_id) => {

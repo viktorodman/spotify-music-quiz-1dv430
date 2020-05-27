@@ -13,7 +13,7 @@ import HighScore from '../../components/HighScore/HighScore'
 import classes from './MusicQuiz.module.css'
 
 
-class MusicQuiz extends Component {
+export class MusicQuiz extends Component {
 
     async componentDidMount() {
         await this.props.getToken()
@@ -27,7 +27,7 @@ class MusicQuiz extends Component {
             case 'Quiz Started':
                 return <Quiz />
             case 'Showing Score':
-                return <ScoreDisplay 
+                return <ScoreDisplay
                     quizSelectClick={() => this.props.showQuizSelection()}
                     highScoreClick={() => this.props.showHighScore()}
                     score={this.props.score}
@@ -44,7 +44,7 @@ class MusicQuiz extends Component {
         return (
             <div className={`col ${classes.MusicQuiz}`}>
                 <SpotifyPlayer/>
-                {this.currentQuizStatus()}
+                {this.props.quizStatus ? this.currentQuizStatus() : null}
             </div>
         )
     }

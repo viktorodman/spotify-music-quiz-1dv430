@@ -7,14 +7,15 @@ export const Results = (props) => {
         return (
             <Result 
                 numberOfQuestions={result.numberOfQuestions}
-                correctAnswers={result.correctAnswer}
+                correctAnswers={result.numberOfCorrectAnswers}
+                key={result._id}
             />
         )
     }) 
 
     return (
         <div className="col-12 text-center">
-            {props.results.length < 1 ? <p>No results found...</p> : {quizResults}}
+            {props.results.length < 1 ? <p>No results found...</p> : quizResults}
         </div>
     )
 }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { getQuestions, nextQuestion, sendAnswer } from '../../actions/questionActions'
 import { startTimer, resetTimer, stopTimer } from '../../actions/timerActions'
-import { stopSong } from '../../actions/playerActions'
+import { stopSong, playSong } from '../../actions/playerActions'
 import { showScore } from '../../actions/quizActions'
 import { addScore } from '../../actions/highScoreActions'
 
@@ -52,6 +52,7 @@ export class Quiz extends Component {
 
         if(questionsReady) {
             if (!correctAnswer){
+                this.props.playSong(this.props.questions[this.props.questionIndex].question_track_url, this.props.deviceId)
                 this.props.startTimer()
             }
             return (
@@ -59,8 +60,13 @@ export class Quiz extends Component {
                     <QuizTimer 
                         onTimesUp={() => this.handleTimesUp()}
                     />
-                    <QuizQuestion 
+                    <QuizQuestion
+                        numOfQuestions={this.props.questions.length}
+                        question={this.props.questions[this.props.questionIndex]} 
                         onAnswer={(question_number, alt_number) => this.handleAnswerSelected(question_number, alt_number)}
+                        answerMessage={this.props.answerMessage}
+                        selectedAnswer={this.props.selectedAnswer}
+                        correctAnswer={this.props.correctAnswer}
                     />
                     <NextButton 
                         shouldDisplay={this.props.correctAnswer !== null}
@@ -84,7 +90,9 @@ const mapStateToProps = (state) => ({
     questions: state.questions.questions,
     questionIndex: state.questions.currentQuestionIndex,
     score: state.questions.score,
-    quizTitle: state.quiz.selectedQuizTitle
+    quizTitle: state.quiz.selectedQuizTitle,
+    answerMessage: state.questions.answerMessage,
+    selectedAnswer: state.questions.selectedAnswer
 })
 
 export default connect(mapStateToProps, {
@@ -94,6 +102,7 @@ export default connect(mapStateToProps, {
     resetTimer,
     stopTimer,
     stopSong,
+    playSong,
     sendAnswer,
     showScore,
     addScore

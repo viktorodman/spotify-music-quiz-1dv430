@@ -16,6 +16,7 @@ export class HighScore extends Component {
         if(this.props.highScores !== null) {
             return (
                 <div className="row justify-content-md-center">
+                        <h5 className="text-center">Top Five Results</h5>
                         <HighScoreSelector 
                             click={(id) => this.props.selectHighScoreTheme(id)}
                             themes={this.props.highScores}
@@ -37,8 +38,7 @@ export class HighScore extends Component {
 
 const mapStateToProps = (state) => ({
     highScores: state.highScore.highScores,
-    selectedHighScore: state.highScore.selectedHighScore,
-    quizzes: state.quiz.possibleQuizzes
+    selectedHighScore: state.highScore.selectedHighScore
 })
 
 
@@ -47,8 +47,4 @@ export default connect(mapStateToProps, {
     selectHighScoreTheme
 })(HighScore)
 
-/* <div>
-                    <p>{this.props.highScores[0].playlistName}</p>
-                    <p>{this.props.highScores[0].numberOfQuestions}</p>
-                    <p>{this.props.highScores[0].correctAnswer}</p>
-                </div> */
+

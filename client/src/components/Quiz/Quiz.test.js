@@ -5,44 +5,21 @@ import Adapter from 'enzyme-adapter-react-16'
 
 import { Quiz } from './Quiz'
 import QuizQuestion from './QuizQuestion/QuizQuestion'
-import QuizAlts from './QuizAlts/QuizAlts'
-import SpotifyPlayer from '../SpotifyPlayer/SpotifyPlayer'
+import NextButton from './NextButton/NextButton'
+import QuizTimer from './QuizTimer/QuizTimer'
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
+
+ 
+import { fakeQuestions } from '../../fakeData'
+
+const fakeQuestionIndex1 = 0
+const fakeQuestionIndex2 = 1
+const fakeQuestionIndex3 = 2
+const fakeQuestionIndex4 = 3
 
 
-
-
-
-const fakeData = {
-    question_alternatives: {
-        0: { 
-            alt_img: "fake_alt_img.com",
-            alt_number: 1,
-            alt_title: "fake_alt_title"
-        },
-        1: { 
-            alt_img: "fake_alt_img.com",
-            alt_number: 2,
-            alt_title: "fake_alt_title"
-        },
-        2: { 
-            alt_img: "fake_alt_img.com",
-            alt_number: 3,
-            alt_title: "fake_alt_title"
-        },
-        3: { 
-            alt_img: "fake_alt_img.com",
-            alt_number: 4,
-            alt_title: "fake_alt_title"
-        }
-    },
-    question_img: "fake_question_img.com",
-    question_number: 1,
-    question_title: "fake_question_title",
-    question_track_url: "fake_spotify_uri",
-}
-
-
-const fakeAlt = fakeData.question_alternatives['0'].alt_number
+const fakeStartTimer = jest.fn()
+const fakePlaySong = jest.fn()
 
 configure({adapter: new Adapter()})
 
@@ -55,38 +32,98 @@ describe('<Quiz />', () => {
         wrapper = shallow(<Quiz />, {disableLifecycleMethods: true})
     })
 
-    it('should render a <p> element with the text "Loading" if the prop currentQuestion is null', () => {
-        wrapper.setProps({currentQuestion: null})
+    it('should render a LoadingSpinner element if the prop questionsReady is null', () => {
+        wrapper.setProps({
+            questionsReady: null 
+        })
              
-        expect(wrapper.find('p').text()).toEqual('Loading')
+        expect(wrapper.find(LoadingSpinner)).toHaveLength(1)
     })
 
-    it('should render a <QuizQuestion /> element if the prop currentQuestion is not null and shouldShowScore is false', () => {
-        wrapper.setProps({shouldShowScore: false, currentQuestion: fakeData})
+    it('should render a <QuizQuestion /> element if the prop questionsReady is set to true', () => {
+        wrapper.setProps({
+            questionsReady: true, 
+            questions: fakeQuestions, 
+            questionIndex: fakeQuestionIndex1, 
+            startTimer: fakeStartTimer,
+            playSong: fakePlaySong
+        })
         
         expect(wrapper.find(QuizQuestion)).toHaveLength(1)
     })
 
-    it('should render a <QuizAlts /> element if the prop currentQuestion is not null and shouldShowScore is false', () => {
-        wrapper.setProps({shouldShowScore: false, currentQuestion: fakeData})
+    it('should render a <QuizTimer /> element if the prop questionsReady is set to true', () => {
+        wrapper.setProps({
+            questionsReady: true, 
+            questions: fakeQuestions, 
+            questionIndex: fakeQuestionIndex1, 
+            startTimer: fakeStartTimer, 
+            playSong: fakePlaySong
+        })
         
-        expect(wrapper.find(QuizAlts)).toHaveLength(1)
+        expect(wrapper.find(QuizTimer)).toHaveLength(1)
     })
 
-    it('should render a <SpotifyPlayer /> element if the prop currentQuestion is not null and shouldShowScore is false', () => {
-        wrapper.setProps({shouldShowScore: false, currentQuestion: fakeData})
+    it('should render a <NextButton /> element if the prop questionsReady is set to true', () => {
+        wrapper.setProps({
+            questionsReady: true, 
+            questions: fakeQuestions, 
+            questionIndex: fakeQuestionIndex1, 
+            startTimer: fakeStartTimer, 
+            playSong: fakePlaySong
+        })
         
-        expect(wrapper.find(SpotifyPlayer)).toHaveLength(1)
-    })
-    it('should render a <button /> element with the text "Next Question" if the prop currentQuestion is not null and shouldShowScore is false and props.selectedAnswer is not null', () => {
-        wrapper.setProps({shouldShowScore: false, currentQuestion: fakeData, selectedAnswer: fakeAlt})
-        
-        expect(wrapper.find('button').text()).toEqual('Next Question')
+        expect(wrapper.find(NextButton)).toHaveLength(1)
     })
 
-    it('should render a <p> element with the text "Loading." if the prop currentQuestion is null', () => {
-        wrapper.setProps({shouldShowScore: true, currentQuestion: fakeData})
+    it('should render a <NextButton /> element with the attribute shouldDisplay set to false', () => {
+        wrapper.setProps({ 
+            questionsReady: true, 
+            questions: fakeQuestions, 
+            questionIndex: fakeQuestionIndex1, 
+            startTimer: fakeStartTimer, 
+            playSong: fakePlaySong, 
+            correctAnswer: null 
+        })
              
-        expect(wrapper.find('p').text()).toEqual('SCORE')
+        expect(wrapper.find(NextButton).prop('shouldDisplay')).toEqual(false)
+    })
+
+    it('should render a <NextButton /> element with the attribute shouldDisplay set to true', () => {
+        wrapper.setProps({ 
+            questionsReady: true, 
+            questions: fakeQuestions, 
+            questionIndex: fakeQuestionIndex1, 
+            startTimer: fakeStartTimer, 
+            playSong: fakePlaySong, 
+            correctAnswer: fakeQuestions[0] 
+
+        })
+             
+        expect(wrapper.find(NextButton).prop('shouldDisplay')).toEqual(true)
+    })
+    it('should render a <NextButton /> element with the text "Show results"', () => {
+        wrapper.setProps({ 
+            questionsReady: true, 
+            questions: fakeQuestions, 
+            questionIndex: fakeQuestionIndex4, 
+            startTimer: fakeStartTimer, 
+            playSong: fakePlaySong, 
+            correctAnswer: fakeQuestions[0] 
+        })
+             
+        expect(wrapper.find(NextButton).prop('buttonText')).toEqual('Show results')
+    })
+    it('should render a <NextButton /> element with the text "Next question"', () => {
+        wrapper.setProps({ 
+            questionsReady: true, 
+            questions: fakeQuestions, 
+            questionIndex: fakeQuestionIndex1, 
+            startTimer: fakeStartTimer, 
+            playSong: fakePlaySong, 
+            correctAnswer: fakeQuestions[0] 
+        })
+             
+        expect(wrapper.find(NextButton).prop('buttonText')).toEqual('Next question')
     })
 })

@@ -6,7 +6,10 @@ import classes from './QuizAlts.module.css'
 export const QuizAlts = (props) => {
     const { alternatives, correctAlt } = props
 
-    const questionAlternatives = alternatives.map(alternative => {
+    let questionAlternatives = null
+
+    if (alternatives) {
+        questionAlternatives = alternatives.map(alternative => {
         let isCorrectAnswer = null
         if (correctAlt !== null) {
             isCorrectAnswer = alternative.alt_number === correctAlt
@@ -22,6 +25,7 @@ export const QuizAlts = (props) => {
             />
         )     
     })
+    }
 
     return (
         <div className={`row justify-content-center ${classes.QuizAlts}`}>
