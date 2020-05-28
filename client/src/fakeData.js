@@ -177,5 +177,29 @@ export const fakeHighScoreList = [
                 numberOfQuestions: 8
             }
         ]
+    },
+    {
+        playlistName: 'fake_name_3',
+        scores: [
+            
+        ]
+    }
+]
+
+export const fakeQuizzes = [
+    {
+        id: 'fake_id_1',
+        image: 'fake_image_1',
+        description: 'fake_description_1'
+    },
+    {
+        id: 'fake_id_2',
+        image: 'fake_image_2',
+        description: 'fake_description_2'
+    },
+    {
+        id: 'fake_id_3',
+        image: 'fake_image_3',
+        description: 'fake_description_3'
     }
 ]

@@ -19,9 +19,9 @@ describe('<HighScoreSelector />', () => {
     const wrapper = shallow(<HighScoreSelector themes={fakeHighScoreList} selectedHighScore={fakeHighScoreList[0]}/>)
     
 
-    it('should render 2 SelectorItem elements if the highScore list contains 2 highScore objects', () => {
+    it('should render 3 SelectorItem elements if the highScore list contains 3 highScore objects', () => {
              
-        expect(wrapper.find(SelectorItem)).toHaveLength(2)
+        expect(wrapper.find(SelectorItem)).toHaveLength(3)
     })
 
     it('should render a SelectorItem element with the prop name set to "fake_name_1"', () => {

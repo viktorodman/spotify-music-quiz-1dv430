@@ -2,42 +2,6 @@
 
 const highScoreController = {}
 
-
-const highScores = [
-    {playlistName: 'name1', scores: [
-        {numberOfQuestions: 8, correctAnswer: 1},
-        {numberOfQuestions: 8, correctAnswer: 2},
-        {numberOfQuestions: 8, correctAnswer: 3},
-        {numberOfQuestions: 8, correctAnswer: 4},
-        {numberOfQuestions: 8, correctAnswer: 5}
-    ]
-    },
-    {playlistName: 'name2', scores: [
-        {numberOfQuestions: 8, correctAnswer: 5},
-        {numberOfQuestions: 8, correctAnswer: 4},
-        {numberOfQuestions: 8, correctAnswer: 3},
-        {numberOfQuestions: 8, correctAnswer: 2},
-        {numberOfQuestions: 8, correctAnswer: 1}
-    ]
-    },
-    {playlistName: 'name3', scores: [
-        {numberOfQuestions: 8, correctAnswer: 1},
-        {numberOfQuestions: 8, correctAnswer: 2},
-        {numberOfQuestions: 8, correctAnswer: 3},
-        {numberOfQuestions: 8, correctAnswer: 4},
-        {numberOfQuestions: 8, correctAnswer: 5}
-    ]
-    },
-    {playlistName: 'name4', scores: [
-        {numberOfQuestions: 8, correctAnswer: 5},
-        {numberOfQuestions: 8, correctAnswer: 4},
-        {numberOfQuestions: 8, correctAnswer: 3},
-        {numberOfQuestions: 8, correctAnswer: 2},
-        {numberOfQuestions: 8, correctAnswer: 1}
-    ]
-    }
-]
-
 const User = require('../models/User')
 const HighScore = require('../models/HighScore')
 

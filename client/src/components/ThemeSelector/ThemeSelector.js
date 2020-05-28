@@ -3,10 +3,13 @@ import { connect } from 'react-redux'
 import { selectQuiz, startQuiz } from '../../actions/quizActions'
 import classes from './ThemeSelector.module.css'
 
+import NextButton from '../Quiz/NextButton/NextButton'
+
 import SelectorItem from './SelectorItem/SelectorItem'
-class ThemeSelector extends Component {
+export class ThemeSelector extends Component {
     showQuizzes () {
         return (
+            <div className="col-12">
             <div className="card-group">
                 {this.props.quizzes.map(quiz => 
                 (<SelectorItem 
@@ -18,24 +21,23 @@ class ThemeSelector extends Component {
                 />
                 ))}
             </div>
+            </div>
         )
     }
 
     render() {
-        if (!this.props.quizzes) {
-            return <div>Loading...</div>
+        if (this.props.quizzes) {
+            return (
+                <div className={`row justify-content-md-center ${classes.ThemeSelector}`}>
+                    {this.showQuizzes()}
+                    <NextButton
+                        shouldDisplay={this.props.selectedQuiz}
+                        buttonText={"Start Quiz"}
+                        click={() => this.props.startQuiz()}    
+                    />
+                </div>
+            )
         }
-        return (
-            <div className={`row justify-content-md-center ${classes.ThemeSelector}`}>
-                {this.showQuizzes()}
-            { this.props.selectedQuiz ?
-                <div className="row justify-content-md-center">
-                    <div className="column">
-                        <button onClick={() => this.props.startQuiz() }>Start</button>
-                    </div>
-                </div>: null}
-            </div>
-        )
     }
 }
 
