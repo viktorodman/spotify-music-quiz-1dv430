@@ -1,0 +1,23 @@
+.LoginButton {
+    font-size: 25px;
+    background-color: #1DB954;
+    text-transform: uppercase;
+    margin-top: 20px;
+    color: #FFFFFF;
+    padding-left: 45px;
+    padding-right: 45px;
+    text-shadow: #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px,
+             #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px;
+}
+
+.LoginButton:hover {
+    color: #878787;
+    
+}
+
+.spotifyIcon {
+    color: #1ed760;
+    padding-right: 5px;
+    font-size: 25px;
+}
+

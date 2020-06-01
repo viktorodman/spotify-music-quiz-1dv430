@@ -1,4 +1,4 @@
-import { FETCH_ANSWER, NEXT_QUESTION, FETCH_QUESITONS } from '../actions/types'
+import { FETCH_ANSWER, NEXT_QUESTION, FETCH_QUESITONS, RESET_QUESTIONS, RESET_SCORE } from '../actions/types'
 
 const initialState = {
     questionsReady: null,
@@ -36,6 +36,21 @@ export default (state = initialState, { type, payload }) => {
         currentQuestionIndex: 0,
         score: 0,
         questionsReady: true
+    }
+    case RESET_QUESTIONS:
+    return { 
+        ...state,
+        questionsReady: null,
+        questions: null,
+        currentQuestionIndex: null,
+        selectedAnswer: null,
+        correctAnswer: null,
+        answerMessage: null
+    }
+    case RESET_SCORE:
+    return { 
+        ...state,
+        score: 0
     }
     default:
         return state

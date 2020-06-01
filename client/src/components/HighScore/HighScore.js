@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { getHighScores, selectHighScoreTheme } from '../../actions/highScoreActions'
+import { showQuizSelection } from '../../actions/quizActions'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 import HighScoreSelector from './HighScoreSelector/HighScoreSelector'
 import Results from './Results/Results'
+import NextButton from '../Quiz/NextButton/NextButton'
 
 export class HighScore extends Component {
 
@@ -25,6 +27,11 @@ export class HighScore extends Component {
                         <Results 
                             results={this.props.selectedHighScore.scores}
                         />
+                        <NextButton
+                            shouldDisplay={true} 
+                            buttonText={`Go to quiz selection`}
+                            click={() => this.props.showQuizSelection()}
+                        />
                 </div>
             )
         }
@@ -44,7 +51,8 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
     getHighScores,
-    selectHighScoreTheme
+    selectHighScoreTheme,
+    showQuizSelection
 })(HighScore)
 
 

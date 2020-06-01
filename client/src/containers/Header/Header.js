@@ -1,16 +1,18 @@
-import React, { Component } from 'react'
-
+import React from 'react'
+import Logo from '../../components/HeaderItems/Logo/Logo'
+import LogoutButton from '../../components/Auth/AuthButtons/LogoutButton/LogoutButton'
 import classes from './Header.module.css'
 
-export class Header extends Component {
-    render() {
-        return (
-            <div className={`row ${classes.Header}`}>
-                <div className="col">Header</div>
-                <div className="col">Logo</div>
-            </div>
-        )
-    }
+
+export const Header = (props) => {
+    return (
+        <div className={`row ${classes.Header}`}>
+            <Logo />
+            {props.isAuthenticated ? <LogoutButton click={() => props.logoutClick()}/> : null}
+            
+        </div>
+    )
 }
+
 
 export default Header

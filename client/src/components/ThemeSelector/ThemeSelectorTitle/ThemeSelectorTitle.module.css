@@ -1,0 +1,11 @@
+.ThemeSelectorTitle {
+
+}
+
+.ThemeSelectorTitle h1{
+    color: #878787;
+    text-shadow: #111111 0px 0px 2px,   #111111 0px 0px 2px,   #111111 0px 0px 2px,
+             #111111 0px 0px 2px,   #111111 0px 0px 2px,   #111111 0px 0px 2px;
+    font-size: 50px;
+    padding-bottom: 10px;
+}

@@ -1,7 +1,7 @@
 import { QUIZ_SELECTED, FETCH_POSSIBLE_QUIZZES, QUIZ_STARTED, SHOW_SCORE, SELECTING_QUIZ, SHOW_HIGH_SCORE } from '../actions/types'
 
 const initialState = {
-    quizStatus: 'Showing Score',
+    quizStatus: 'Selecting Quiz',
     quizIsSelected: null,
     selectedQuiz: null,
     selectedQuizTitle: null,

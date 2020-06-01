@@ -1,10 +1,18 @@
-import { FETCH_QUESITONS, NEXT_QUESTION, FETCH_ANSWER } from './types'
+import { FETCH_QUESITONS, NEXT_QUESTION, FETCH_ANSWER, RESET_QUESTIONS, RESET_SCORE } from './types'
 
 
 export const nextQuestion = () => (dispatch) => {
     dispatch({ type: NEXT_QUESTION })
 }
 
+
+export const resetQuestions = () => (dispatch) => {
+    dispatch({ type: RESET_QUESTIONS })
+}
+
+export const resetScore = () => (dispatch) => {
+    dispatch({ type:  RESET_SCORE })
+}
 
 export const sendAnswer = (question_number, alt_number) => async (dispatch) => {
     const response = await fetch('/api/quiz/answer', {

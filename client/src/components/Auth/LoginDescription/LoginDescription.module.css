@@ -1,12 +1,6 @@
-.QuizTimer {
-    height: 30px;
-}
-
-
-
-.timer {
-    font-size: 30px;
-    color: #e12c2b;
+.LoginDescription {
+    color: #FFFFFF;
+    padding-top: 20px;
     text-shadow: #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px,
              #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px;
 }

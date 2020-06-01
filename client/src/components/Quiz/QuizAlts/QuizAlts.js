@@ -28,7 +28,7 @@ export const QuizAlts = (props) => {
     }
 
     return (
-        <div className={`row justify-content-center ${classes.QuizAlts}`}>
+        <div className={`row row-cols-1 ${classes.QuizAlts}`}>
             {questionAlternatives}
         </div>
     )

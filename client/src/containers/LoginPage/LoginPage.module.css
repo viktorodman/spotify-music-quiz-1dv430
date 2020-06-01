@@ -1,0 +1,9 @@
+.LoginPage {
+    background-color: #232528;
+    border-radius: 5px;
+    height: 300px;
+    /* border: 1px solid #e12c2b; */
+    -webkit-box-shadow: 1px 0px 58px -13px rgba(0,0,0,0.75);
+-moz-box-shadow: 1px 0px 58px -13px rgba(0,0,0,0.75);
+box-shadow: 1px 0px 58px -13px rgba(0,0,0,0.75);
+}

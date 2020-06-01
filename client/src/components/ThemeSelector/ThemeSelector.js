@@ -4,12 +4,13 @@ import { selectQuiz, startQuiz } from '../../actions/quizActions'
 import classes from './ThemeSelector.module.css'
 
 import NextButton from '../Quiz/NextButton/NextButton'
-
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import ThemeSelectorTitle from './ThemeSelectorTitle/ThemeSelectorTitle'
 import SelectorItem from './SelectorItem/SelectorItem'
 export class ThemeSelector extends Component {
     showQuizzes () {
         return (
-            <div className="col-12">
+            <div className="col-11">
             <div className="card-group">
                 {this.props.quizzes.map(quiz => 
                 (<SelectorItem 
@@ -29,6 +30,7 @@ export class ThemeSelector extends Component {
         if (this.props.quizzes) {
             return (
                 <div className={`row justify-content-md-center ${classes.ThemeSelector}`}>
+                    <ThemeSelectorTitle />
                     {this.showQuizzes()}
                     <NextButton
                         shouldDisplay={this.props.selectedQuiz}
@@ -36,7 +38,9 @@ export class ThemeSelector extends Component {
                         click={() => this.props.startQuiz()}    
                     />
                 </div>
-            )
+            ) 
+        }else {
+            return <LoadingSpinner />
         }
     }
 }

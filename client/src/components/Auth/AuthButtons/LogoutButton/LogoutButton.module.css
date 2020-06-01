@@ -1,0 +1,15 @@
+.LogoutButton {
+    padding: 0px;
+    margin: 0px;
+    padding-top: 5px;
+}
+
+.button {
+    background-color: unset;
+    border: none;
+    color: #878787;
+    padding: 0px;
+    font-size: 25px;
+    text-shadow: #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px,
+             #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px;
+}

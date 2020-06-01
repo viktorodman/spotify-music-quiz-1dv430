@@ -1,0 +1,15 @@
+.Logo {
+    
+}
+
+.logoText {
+    /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+    margin: 0px;
+    margin-left: 10px;
+    padding: 0px;
+    font-size: 40px;
+    font-weight: bolder;
+    color: #878787;
+    text-shadow: #111111 0px 0px 2px,   #111111 0px 0px 2px,   #111111 0px 0px 2px,
+             #111111 0px 0px 2px,   #111111 0px 0px 2px,   #111111 0px 0px 2px;
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { getQuestions, nextQuestion, sendAnswer } from '../../actions/questionActions'
+import { getQuestions, nextQuestion, sendAnswer, resetQuestions, resetScore } from '../../actions/questionActions'
 import { startTimer, resetTimer, stopTimer } from '../../actions/timerActions'
 import { stopSong, playSong } from '../../actions/playerActions'
 import { showScore } from '../../actions/quizActions'
@@ -18,13 +18,15 @@ import classes from './Quiz.module.css'
 export class Quiz extends Component {
     async componentDidMount() {
         await this.props.getQuestions(this.props.selectedQuiz)
+        this.props.resetScore()
     }
 
     async handleQuestionChange () {
-        const {questions, questionIndex, score, quizTitle} = this.props
+        const { questions, questionIndex, score, quizTitle } = this.props
 
         if (questions[questionIndex].question_number >= questions.length) {
             await this.props.addScore(quizTitle, score, questions.length)
+            this.props.resetQuestions()
             this.props.showScore()
         } else {
             this.props.nextQuestion()
@@ -105,5 +107,7 @@ export default connect(mapStateToProps, {
     playSong,
     sendAnswer,
     showScore,
-    addScore
+    addScore,
+    resetQuestions, 
+    resetScore
 })(Quiz)

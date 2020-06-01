@@ -16,7 +16,10 @@ export class Layout extends Component {
     render() {
         return (
             <div className={classes.Layout}>
-                <Header />
+                <Header 
+                isAuthenticated={this.props.isAuthenticated}
+                logoutClick={() => this.props.logout()}
+                />
             <div className='container'>
                 <main>
                     {

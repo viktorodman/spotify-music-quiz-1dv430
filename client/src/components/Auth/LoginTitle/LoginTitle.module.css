@@ -1,0 +1,13 @@
+.LoginTitle {
+    padding-top: 10px;
+    color: #878787;
+    text-shadow: #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px,
+             #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px;
+    
+    
+}
+
+
+.titleText {
+    font-size: 30px;
+}

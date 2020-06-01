@@ -1,7 +1,8 @@
 
 .QuizAlt {
-    max-width: 260px;
+    max-width: 240px;
     padding-bottom: 15px;
+    
    /*  transition: .40s, transform .40s ease;
     -moz-transition: .40s, transform .40s ease;
     -webkit-transition: .40s, transform .40s ease; */
@@ -9,15 +10,15 @@
 }
 
 .QuizAlt img{
-    height: 230px;
+    height: 170px;
     -webkit-box-shadow: -2px -3px 20px 2px rgba(0,0,0,0.75);
 -moz-box-shadow: -2px -3px 20px 2px rgba(0,0,0,0.75);
 box-shadow: -2px -3px 20px 2px rgba(0,0,0,0.75);
 }
 
 .QuizAlt h5 {
-    font-size: 30px;
-    color: #e12c2b;
+    font-size: 25px;
+    color: #878787;
     text-shadow: #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px,
              #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px;
 }
