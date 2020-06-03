@@ -24,7 +24,7 @@ configure({adapter: new Adapter()})
 
 describe('<HighScore />', () => {
     
-    const wrapper = shallow(<HighScore highScores={null}/>)
+    const wrapper = shallow(<HighScore highScores={null}/>, {disableLifecycleMethods: true})
     
 
     it('should render a LoadingSpinner element if the prop highScores is null', () => {
@@ -32,7 +32,7 @@ describe('<HighScore />', () => {
         expect(wrapper.find(LoadingSpinner)).toHaveLength(1)
     })
 
-    const wrapper2 = shallow(<HighScore {...props}/>)
+    const wrapper2 = shallow(<HighScore {...props}/>, {disableLifecycleMethods: true})
 
     it('should render a HighScoreSelector and a Results element if the prop highScore is not set to null', () => {
              
