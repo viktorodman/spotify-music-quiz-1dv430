@@ -25,6 +25,10 @@ highScoreController.getHighScores = async (req, res) => {
         highScores = await createNewHighScoreList(id)
     }
 
+    highScores.forEach(highScore => {
+        highScore.scores.sort((a, b) => b.numberOfCorrectAnswers - a.numberOfCorrectAnswers)
+    })
+
 
     res.json(highScores)
     } catch (error) {
