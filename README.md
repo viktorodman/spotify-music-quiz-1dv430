@@ -5,13 +5,19 @@
 ***
 
 1. [Introduction](#introduction)
-2. [Installation](#installation)
+2. [Requirements](#requirements)
+3. [Installation](#installation)
 
 
 ## Introduction
 
 "Music Quiz For Spotify" is a music quiz app built with react, redux and express. The application uses the Spotify Web API and the Spotify Web Playback SDK. 
 
+
+## Requirements
+
+* Spotify Premium Account
+* Mac, Windows (8.1 or above) and Linux, using Chrome, Firefox, Microsoft Edge and Internet Explorer(version 11 or above).
 
 ## Installation 
 
